@@ -91,88 +91,101 @@ int keypress(int keycode, t_vars *vars)
   calc(vars);
   return (0);
 }
+void  set_value(t_vars *vars, t_x *x, t_y *y, double camera)
+{
 
+		x->ray_dir_x = vars->dirX + vars->planeX * camera;
+		y->ray_dir_y = vars->dirY + vars->planeY * camera;	
+		x->map_x = (int) vars->posX;
+    y->map_y = (int) vars->posY;
+    x->dlt_dist_x = (x->ray_dir_x == 0) ? 1e30 : abs_double(1 / x->ray_dir_x);
+    y->dlt_dist_y = (y->ray_dir_y == 0) ? 1e30 : abs_double(1 / y->ray_dir_y);
+}
+void  first_step(t_vars *vars, t_x *x, t_y *y)
+{
+  if(x->ray_dir_x < 0)
+  {
+    x->step_x = -1;
+    x->side_dist_x = (vars->posX - x->map_x) * x->dlt_dist_x;
+  }
+  else
+  {
+    x->step_x = 1;
+    x->side_dist_x = (x->map_x + 1.0 - vars->posX) * x->dlt_dist_x;
+  }
+  if(y->ray_dir_y < 0)
+  {
+    y->step_y = -1;
+    y->side_dist_y = (vars->posY - y->map_y) * y->dlt_dist_y;
+  }
+  else
+  {
+    y->step_y = 1;
+    y->side_dist_y = (y->map_y + 1.0 - vars->posY) * y->dlt_dist_y;
+  }
+}
+int calc_dda(t_x *x, t_y *y)
+{
+  int hit;
+  int side;
+  double  per_wall_dist;
 
+  hit = 0;
+  while(hit == 0)
+  {
+    if(x->side_dist_x < y->side_dist_y)
+    {
+      x->side_dist_x += x->dlt_dist_x;
+      x->map_x += x->step_x;
+      side = 0;
+    }
+    else
+    {
+      y->side_dist_y += y->dlt_dist_y;
+      y->map_y += y->step_y;
+      side = 1;
+    }
+    if(worldMap[x->map_x][y->map_y] > 0)
+      hit = 1;
+  }
+  if(side == 0)
+    per_wall_dist = (x->side_dist_x - x->dlt_dist_x);
+  else
+    per_wall_dist = (y->side_dist_y - y->dlt_dist_y);
+  return ((int)(WIN_HEIGHT / per_wall_dist));
+}
+
+void  drawing(t_vars *vars, int i, int line_height)
+{
+  int draw_start;
+  int draw_end;
+  
+  draw_start = -line_height / 2 + WIN_HEIGHT / 2;
+  if(draw_start < 0)
+    draw_start = 0;
+  draw_end = line_height / 2 + WIN_HEIGHT / 2;
+  if(draw_end >= WIN_HEIGHT)
+    draw_end = WIN_HEIGHT - 1;
+	for(int j = draw_start; j < draw_end; j++)
+		  mlx_pixel_put(vars->mlx, vars->win, i, j, 255);
+
+}
 void	calc(t_vars *vars)
 {
 	int		i;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
+	double	camera;
+  t_x   x;
+  t_y   y;
 
   mlx_clear_window(vars->mlx, vars->win);
 	i = 0;
 	while (i < WIN_WIDTH)
 	{
-		cameraX = 2 * i / (double)WIN_WIDTH - 1;
-		rayDirX = vars->dirX + vars->planeX * cameraX;
-		rayDirY = vars->dirY + vars->planeY * cameraX;	
+		camera = 2 * i / (double)WIN_WIDTH - 1;
+    set_value(vars, &x, &y, camera);
+    first_step(vars, &x, &y);
+    drawing(vars, i, calc_dda(&x, &y));
 		i++;
-		int mapX = (int) vars->posX;
-    int mapY = (int) vars->posY;
-
-      double sideDistX;
-      double sideDistY;
-
-      double deltaDistX = (rayDirX == 0) ? 1e30 : abs_double(1 / rayDirX);
-      double deltaDistY = (rayDirY == 0) ? 1e30 : abs_double(1 / rayDirY);
-      double perpWallDist;
-      int stepX;
-      int stepY;
-
-      int hit = 0;
-      int side;
-      if(rayDirX < 0)
-      {
-        stepX = -1;
-        sideDistX = (vars->posX - mapX) * deltaDistX;
-      }
-      else
-      {
-        stepX = 1;
-        sideDistX = (mapX + 1.0 - vars->posX) * deltaDistX;
-      }
-      if(rayDirY < 0)
-      {
-        stepY = -1;
-        sideDistY = (vars->posY - mapY) * deltaDistY;
-      }
-      else
-      {
-        stepY = 1;
-        sideDistY = (mapY + 1.0 - vars->posY) * deltaDistY;
-      }
-    
-      while(hit == 0)
-      {
-        if(sideDistX < sideDistY)
-        {
-          sideDistX += deltaDistX;
-          mapX += stepX;
-          side = 0;
-        }
-        else
-        {
-          sideDistY += deltaDistY;
-          mapY += stepY;
-          side = 1;
-        }
-        if(worldMap[mapX][mapY] > 0) hit = 1;
-      }
-      if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-      else          perpWallDist = (sideDistY - deltaDistY);
-
-      int lineHeight = (int)(WIN_HEIGHT / perpWallDist);
-
-      //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + WIN_HEIGHT / 2;
-      if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
-      if(drawEnd >= WIN_HEIGHT) drawEnd = WIN_HEIGHT - 1;
-	  for(int j = drawStart; j < drawEnd; j++)
-	  {
-		  mlx_pixel_put(vars->mlx, vars->win, i, j, 255);
-	  }
 	}
 	return ;
 }
