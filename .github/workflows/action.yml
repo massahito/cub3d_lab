@@ -10,7 +10,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          git clone https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com:42Paris/minilibx-linux.git
+          https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/42Paris/minilibx-linux.git
       - name: Make re
         run: make re
       - name: ls workspace
