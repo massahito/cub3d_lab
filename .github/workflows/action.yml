@@ -6,12 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: clone minilbx-linux
-        uses: actions/checkout@master
+      - name: Clone minilibx-linux
+        uses: actions/checkout@v3
         with:
           repository: 42Paris/minilibx-linux.git
           path: ./minilibx-linux
       - name: Make re
         run: make re
-      - name: ls workspace
-        run: ls ${{github.workspace}}
+      - run: ls ${{github.workspace}}
