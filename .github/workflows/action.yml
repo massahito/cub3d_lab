@@ -7,6 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Clone minilibx-linux
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         uses: actions/checkout@v3
         with:
           repository: 42Paris/minilibx-linux.git
