@@ -15,4 +15,3 @@ jobs:
           path: ./minilibx-linux
       - name: Make re
         run: ls ${{github.workspace}}
-        run: make re
