@@ -1,8 +1,8 @@
-name: GitHub Actions Demo
+name: GitHub Action
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Running-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -16,3 +16,9 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git clone git@github.com:42Paris/minilibx-linux.git
+      - run: make re
+      - run: ls ${{github.workspace}}
