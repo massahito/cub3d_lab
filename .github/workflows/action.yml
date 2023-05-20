@@ -9,7 +9,8 @@ jobs:
       - name: clone minilbx-linux
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: git clone https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com:42Paris/minilibx-linux.git
+        run: |
+          git clone https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com:42Paris/minilibx-linux.git
       - name: make
       - run: make re
       - name: ls
