@@ -2,7 +2,7 @@ name: GitHub Action
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Build:
+  Built:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
