@@ -17,3 +17,5 @@ jobs:
           path: ./minilibx-linux
       - name: Make re
         run: make re
+      - name: ls
+          run: ls ${{github.workflow}}
