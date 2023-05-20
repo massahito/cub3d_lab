@@ -9,8 +9,6 @@ jobs:
       - name: env set
         run: "sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-dev"
       - name: Clone minilibx-linux
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         uses: actions/checkout@v3
         with:
           repository: 42Paris/minilibx-linux
