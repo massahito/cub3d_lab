@@ -12,6 +12,5 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: josean-dev/dev-environment-files
-          path: ./minilibx-linux
       - name: Make re
         run: ls ${{github.workspace}}
