@@ -11,7 +11,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         uses: actions/checkout@v3
         with:
-          repository: 42Paris/minilibx-linux.git
+          repository: MasaDevs/Compro
           path: ./minilibx-linux
       - name: Make re
         run: make re
