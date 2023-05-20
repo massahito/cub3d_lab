@@ -5,4 +5,4 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      -echo "hello test"
+      -run: echo "hello test"
