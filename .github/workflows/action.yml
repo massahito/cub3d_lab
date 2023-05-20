@@ -18,4 +18,4 @@ jobs:
       - name: Make re
         run: make re
       - name: ls
-          run: ls ${{github.workflow}}
+          run: "ls ${{github.workspace}}"
