@@ -7,10 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: clone minilbx-linux
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/42Paris/minilibx-linux.git
+        uses: actions/checkout@v3
+        with:
+          repository: 42Paris/minilibx-linux.git
       - name: Make re
         run: make re
       - name: ls workspace
