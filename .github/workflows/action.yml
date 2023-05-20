@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: env set
+        run: "sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-dev"
       - name: Clone minilibx-linux
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
