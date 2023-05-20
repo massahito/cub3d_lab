@@ -11,6 +11,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         uses: actions/checkout@v3
         with:
-          repository: josean-dev/dev-environment-files
+          repository: 42Paris/minilibx-linux
+          path: ./minilibx-linux
       - name: Make re
         run: ls ${{github.workspace}}
