@@ -26,10 +26,8 @@ UnitTest:
 	./test/UnitTest/UnitTest
 clean:
 	rm -rf $(OBJDIR)
-	make clean -C test/UnitTest
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C test/UnitTest
 re:	fclean all
 
 .PHONY:
