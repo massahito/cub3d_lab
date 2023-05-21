@@ -5,6 +5,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Clone minilibx-linux
+        uses: actions/checkout@v3
+        with:
+          repository: 42Paris/minilibx-linux
+          path: ./minilibx-linux
+      - name: make minilibx
+        run: make -C ./minilibx-linux/
       - uses: actions/checkout@v3
       - name: env
         run: "sudo apt update && sudo apt install -y libcunit1-dev"
