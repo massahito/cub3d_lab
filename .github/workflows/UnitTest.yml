@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: env
-        run: "sudo apt update && sudo apt install libcunit1-dev"
+        run: "sudo apt update && sudo apt install -y libcunit1-dev"
       - name: complile
         run: make test
 

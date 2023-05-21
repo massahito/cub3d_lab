@@ -6,12 +6,10 @@ LIB			=	-lcunit
 SRCS		=	main.c \
 				../../srcs/file_name.c \
 				file_name_test.c \
-
 OBJS		=	${SRCS:.c=.o}
 
 all: ${OBJS}
 	${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LIB} -o ${NAME}
-
 ${OBJS}: %.o:%.c
 	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@ 
 clean: ${OBJS}
@@ -19,6 +17,5 @@ clean: ${OBJS}
 fclean: clean
 	rm -f $(NAME)
 re:	fclean all
-
 .PHONY:
 	all clean fclean re
