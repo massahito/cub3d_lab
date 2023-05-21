@@ -19,6 +19,12 @@
 #define A_KEY	97
 #define R_ALW	65363
 #define L_ALW	65361
+
+//function prototypes
+//main.c
 void	calc(t_vars *vars);
-double abs_double(double num);
+//calc.c
+double	abs_double(double num);
+//file_name.c
+int		is_file_name_ok(char *str);
 #endif
