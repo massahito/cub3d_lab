@@ -10,4 +10,6 @@ jobs:
         run: "sudo apt update && sudo apt install -y libcunit1-dev"
       - name: complile
         run: make test
+      - name: exec test
+        run:  ./UnitTest
 
