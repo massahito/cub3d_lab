@@ -6,14 +6,17 @@ LIB			=	-lcunit
 SRCS		=	main.c \
 				../../srcs/file_name.c \
 				file_name_test.c \
-OBJS		=	${SRCS:.c=.o}
+
+OBJDIR		=	./OBJ
+OBJS		=	${addprefix ${OBJDIR}/, ${SRCS:.c=.o}}
 
 all: ${OBJS}
 	${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LIB} -o ${NAME}
-${OBJS}: %.o:%.c
-	${CC} ${CFLAGS} ${INCLUDE} -c $< -o $@ 
-clean: ${OBJS}
-	rm -rf ${OBJS}
+${OBJDIR}/%.o: %.c
+	@mkdir -p $$(dirname $@)
+	$(CC) $(INCLUDE) $(CFLAGS) -o $@ -c $<
+clean:
+	rm -rf ${OBJDIR}
 fclean: clean
 	rm -f $(NAME)
 re:	fclean all
