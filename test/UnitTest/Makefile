@@ -1,7 +1,7 @@
 NAME		=	UnitTest
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
-INCLUDE		=	-I ../../includes/
+INCLUDE		=	-I ../../minilibx-linux/ -I ../../includes/
 LIB			=	-lcunit
 SRCS		=	main.c \
 				../../srcs/file_name.c \
