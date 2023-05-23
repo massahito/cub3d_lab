@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "cub3d.h"
 #define mapWidth 24
 #define mapHeight 24
 static const double pi = 3.141592653589793;
@@ -170,6 +170,7 @@ void  drawing(t_vars *vars, int i, int line_height)
 		  mlx_pixel_put(vars->mlx, vars->win, i, j, 255);
 
 }
+
 void	calc(t_vars *vars)
 {
 	int		i;
