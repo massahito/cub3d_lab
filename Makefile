@@ -7,8 +7,8 @@ LIB		=	-lXext -lX11 -lm -lz
 MLXLIB	=	./minilibx-linux/libmlx.a
 SRCS	=	$(shell find srcs/ -name "*.c")
 OBJDIR	=	obj
-OBJS	=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
-
+OBJS	=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+VPATH	=	./srcs/
 
 all: $(NAME)
 $(NAME):$(OBJS) $(LIBFT) $(MLXLIB)

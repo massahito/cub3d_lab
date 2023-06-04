@@ -7,13 +7,13 @@ SRCS		=	main.c \
 				../../srcs/file_name.c \
 				file_name_test.c \
 
-OBJDIR		=	./OBJ
-OBJS		=	${addprefix ${OBJDIR}/, ${SRCS:.c=.o}}
-
+OBJDIR		=	./obj
+OBJS		=	${addprefix ${OBJDIR}/, ${notdir ${SRCS:.c=.o}}}
+VPATH		=	../../srcs/
 all: ${OBJS}
 	${CC} ${CFLAGS} ${INCLUDE} ${OBJS} ${LIB} -o ${NAME}
 ${OBJDIR}/%.o: %.c
-	@mkdir -p $$(dirname $@)
+	mkdir -p $$(dirname $@)
 	$(CC) $(INCLUDE) $(CFLAGS) -o $@ -c $<
 clean:
 	rm -rf ${OBJDIR}
