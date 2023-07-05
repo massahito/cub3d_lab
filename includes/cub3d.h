@@ -12,6 +12,7 @@
 #define WIN_HEIGHT	480
 
 // linux keycode
+/*
 #define ESC		65307
 #define W_KEY	119
 #define S_KEY	115
@@ -19,6 +20,16 @@
 #define A_KEY	97
 #define R_ALW	65363
 #define L_ALW	65361
+*/
+
+//mac keycode
+#define ESC		53
+#define W_KEY	13
+#define S_KEY	1
+#define D_KEY   2	
+#define A_KEY	0
+#define R_ALW	124
+#define L_ALW	123
 
 //function prototypes
 //main.c
