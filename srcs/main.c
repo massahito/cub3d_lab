@@ -44,7 +44,6 @@ int keypress(int keycode, t_vars *vars)
   double moveSpeed = 0.3;
   double rotSpeed = 0.2;
 
-  printf("keycode %d\n", keycode);
   if (keycode == ESC)
   {
     mlx_destroy_window(vars->mlx, vars->win);
