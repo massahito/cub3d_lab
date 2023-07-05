@@ -1,18 +1,18 @@
 NAME		=	cub3d
 CC			=	cc
-CFLAGS	=	-Wall -Wextra -Werror
-INCLUDE	=	-I /usr/include/ -I /usr/local/include/ -I ./minilibx-linux/ -I ./includes/
-LIBDIR	=	-L/usr/local/lib -L/usr/lib
-LIB		=	-lXext -lX11 -lm -lz
-MLXLIB	=	./minilibx-linux/libmlx.a
-SRCS	=	$(shell find srcs/ -name "*.c")
-OBJDIR	=	obj
-OBJS	=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
-VPATH	=	./srcs/
+CFLAGS		=	-Wall -Wextra -Werror
+INCLUDE		=	-I ./minilibx-linux/ -I ./includes/
+LIBMACDIR	=	-L/usr/local/lib -L/usr/lib -L/usr/X11R6/lib
+LIBMAC		=	-lXext -lX11 -lmlx -framework OpenGL -framework Appkit
+MLXLIB		=	./minilibx-linux/libmlx.a
+SRCS		=	$(shell find ./srcs/ -name "*.c")
+OBJDIR		=	obj
+OBJS		=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+VPATH		=	./srcs/
 
 all: $(NAME)
 $(NAME):$(OBJS) $(LIBFT) $(MLXLIB)
-	$(CC) $(CFLAGS) $(OBJS) $(MLXLIB) $(LIBDIR) $(LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
 
 $(MLXLIB):
 	@make -C ./minilibx-linux
