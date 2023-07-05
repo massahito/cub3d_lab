@@ -3,6 +3,7 @@ CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
 INCLUDE		=	-I ./minilibx-linux/ -I ./includes/
 LIBMACDIR	=	-L/usr/local/lib -L/usr/lib -L/usr/X11R6/lib
+LIBLNXDIR	=	-L/usr/local/lib -L/usr/lib -L./minilibx-linux
 LIBMAC		=	-lmlx -framework OpenGL -framework Appkit
 LIBLNX		=	-lmlx -lX11 -lXext -lm -lz
 MLXLIB		=	./minilibx-linux/libmlx.a
@@ -14,9 +15,9 @@ VPATH		=	./srcs/
 all: $(NAME)
 $(NAME):$(OBJS) $(LIBFT) $(MLXLIB)
 ifeq ($(shell uname -s),Linux)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBDIR) $(LIBLNX) $(MLXLIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBLNXDIR) $(LIBLNX) $(MLXLIB) -o $(NAME)
 else
-	$(CC) $(CFLAGS) $(OBJS) $(LIBDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBMACDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
 endif
 
 $(MLXLIB):
