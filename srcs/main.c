@@ -172,11 +172,10 @@ void  drawing(t_vars *vars, int i, t_data data)
   tex_pos = (draw_start / 2 - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step;
 	for(int j = draw_start; j < draw_end; j++)
   {
-    data.tex_y = (int) tex_pos;
+    data.tex_y = (int) tex_pos & (vars->sample.img_height - 1);
     tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j, vars->sample.addr[data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)] + 128);
+		mlx_pixel_put(vars->mlx, vars->win, i, j, vars->sample.addr[data.tex_y* vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)] + 128);
   }
-
 }
 
 void  set_data(t_data *data, t_vars vars, t_x x, t_y y)
