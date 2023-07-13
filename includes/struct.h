@@ -42,6 +42,12 @@ typedef struct s_y
 	double	dlt_dist_y;
 }		t_y;
 
-
+typedef struct s_data {
+	int		side;
+	double	wall_dist;
+	int		wall_height;
+	t_x		x;
+	t_y		y;
+}		t_data;
 
 #endif

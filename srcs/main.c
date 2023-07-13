@@ -124,11 +124,11 @@ void  first_step(t_vars *vars, t_x *x, t_y *y)
     y->side_dist_y = (y->map_y + 1.0 - vars->posY) * y->dlt_dist_y;
   }
 }
-int calc_dda(t_x *x, t_y *y)
+t_data calc_dda(t_x *x, t_y *y)
 {
-  int hit;
-  int side;
-  double  per_wall_dist;
+  int     hit;
+  int     side;
+  t_data  data;
 
   hit = 0;
   while(hit == 0)
@@ -148,22 +148,24 @@ int calc_dda(t_x *x, t_y *y)
     if(worldMap[x->map_x][y->map_y] > 0)
       hit = 1;
   }
+  data.side = side;
   if(side == 0)
-    per_wall_dist = (x->side_dist_x - x->dlt_dist_x);
+    data.wall_dist = (x->side_dist_x - x->dlt_dist_x);
   else
-    per_wall_dist = (y->side_dist_y - y->dlt_dist_y);
-  return ((int)(WIN_HEIGHT / per_wall_dist));
+    data.wall_dist = (y->side_dist_y - y->dlt_dist_y);
+  data.wall_height  = WIN_HEIGHT / data.wall_dist;
+  return (data);
 }
 
-void  drawing(t_vars *vars, int i, int line_height)
+void  drawing(t_vars *vars, int i, t_data data)
 {
   int draw_start;
   int draw_end;
   
-  draw_start = -line_height / 2 + WIN_HEIGHT / 2;
+  draw_start = -1 * data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_start < 0)
     draw_start = 0;
-  draw_end = line_height / 2 + WIN_HEIGHT / 2;
+  draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_end >= WIN_HEIGHT)
     draw_end = WIN_HEIGHT - 1;
 	for(int j = draw_start; j < draw_end; j++)
