@@ -46,8 +46,10 @@ typedef struct s_data {
 	int		side;
 	double	wall_dist;
 	int		wall_height;
-	t_x		x;
-	t_y		y;
+	int		tex_x;
+	int		tex_y;
+	double	tex_position;
+	double	step;
 }		t_data;
 
 #endif

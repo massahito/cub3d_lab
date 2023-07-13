@@ -159,8 +159,9 @@ t_data calc_dda(t_x *x, t_y *y)
 
 void  drawing(t_vars *vars, int i, t_data data)
 {
-  int draw_start;
-  int draw_end;
+  int     draw_start;
+  int     draw_end;
+  double  tex_pos;
   
   draw_start = -1 * data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_start < 0)
@@ -168,18 +169,40 @@ void  drawing(t_vars *vars, int i, t_data data)
   draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_end >= WIN_HEIGHT)
     draw_end = WIN_HEIGHT - 1;
+  tex_pos = (draw_start / 2 - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step;
 	for(int j = draw_start; j < draw_end; j++)
-		  mlx_pixel_put(vars->mlx, vars->win, i, j, 255);
+  {
+    data.tex_y = (int) tex_pos;
+    tex_pos += data.step;
+		mlx_pixel_put(vars->mlx, vars->win, i, j, vars->sample.addr[data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)] + 128);
+  }
 
+}
+
+void  set_data(t_data *data, t_vars vars, t_x x, t_y y)
+{
+  double wall;
+
+  if (data->side == 0)
+    wall = vars.posY + data->wall_dist * y.ray_dir_y;
+  else
+    wall = vars.posX + data->wall_dist * x.ray_dir_x;
+  wall = wall - floor(wall);
+  data->tex_x = (int)(wall * (double)(vars.sample.img_width));
+  if (data->side == 0 && x.ray_dir_x > 0)
+      data->tex_x = vars.sample.img_width - data->tex_x - 1; 
+  else if (data->side == 1 && y.ray_dir_y < 0)
+      data->tex_x = vars.sample.img_width - data->tex_x - 1; 
+  data->step = (1.0 * vars.sample.img_width) / data->wall_height;
 }
 
 void	calc(t_vars *vars)
 {
-	int		i;
+	int     i;
 	double	camera;
-  t_x   x;
-  t_y   y;
-
+  t_x     x;
+  t_y     y;
+  t_data  data;
   mlx_clear_window(vars->mlx, vars->win);
 	i = 0;
 	while (i < WIN_WIDTH)
@@ -187,7 +210,9 @@ void	calc(t_vars *vars)
 		camera = 2 * i / (double)WIN_WIDTH - 1;
     set_value(vars, &x, &y, camera);
     first_step(vars, &x, &y);
-    drawing(vars, i, calc_dda(&x, &y));
+    data = calc_dda(&x, &y);
+    set_data(&data, *vars, x, y);
+    drawing(vars, i, data);
 		i++;
 	}
 	return ;
