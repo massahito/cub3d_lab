@@ -31,11 +31,11 @@ int worldMap[mapWidth][mapHeight]=
 };
 
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_img data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data.addr + (y * data.size_len + x * (data.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -194,11 +194,10 @@ void	calc(t_vars *vars)
 int	main(void)
 {
 	t_vars vars;
-	t_data	img;
 
   //init vars
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH,WIN_HEIGHT, "Hello world!");
+	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH,WIN_HEIGHT, "cub3d!");
   vars.dirX = -1;
   vars.dirY = 0;
   vars.posX = 22;
@@ -206,11 +205,8 @@ int	main(void)
   vars.planeX = 0;
   vars.planeY = 0.66;
 
-	img.img = mlx_new_image(vars.mlx, WIN_WIDTH, WIN_HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+  vars.sample.img = mlx_xpm_file_to_image(vars.mlx, "./images/redbrick.xpm", &(vars.sample.img_width), &(vars.sample.img_height));
+  vars.sample.addr = mlx_get_data_addr(vars.sample.img, &(vars.sample.bits_per_pixel), &(vars.sample.size_len), &(vars.sample.endian));
   mlx_hook(vars.win, 2, 1L<<0, keypress, &vars);
   //mlx_hook(vars.win, 17, 1L<<0, keypress, &vars);
   calc(&vars);

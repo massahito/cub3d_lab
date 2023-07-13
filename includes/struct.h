@@ -1,5 +1,16 @@
 #ifndef STRUCT_H
 #define STRUCT_H
+
+typedef struct	s_img {
+	void	*img;
+	int		img_height;
+	int		img_width;
+	char	*addr;
+	int		bits_per_pixel;
+	int		size_len;
+	int		endian;
+}				t_img;
+
 typedef struct s_vars
 {
 	void	*mlx;
@@ -10,15 +21,8 @@ typedef struct s_vars
 	double	dirY;
 	double	planeX;
 	double	planeY;
+	t_img	sample;
 }	t_vars;
-
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
 
 typedef struct s_x
 {
