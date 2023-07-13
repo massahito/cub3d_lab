@@ -174,7 +174,7 @@ void  drawing(t_vars *vars, int i, t_data data)
   {
     data.tex_y = (int) tex_pos & (vars->sample.img_height - 1);
     tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j, vars->sample.addr[data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)] + 128);
+		mlx_pixel_put(vars->mlx, vars->win, i, j, *(unsigned int *)(vars->sample.addr + data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)));
   }
 }
 
