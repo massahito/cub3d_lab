@@ -31,11 +31,11 @@ int worldMap[mapWidth][mapHeight]=
 };
 
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_img data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data.addr + (y * data.size_len + x * (data.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -124,11 +124,11 @@ void  first_step(t_vars *vars, t_x *x, t_y *y)
     y->side_dist_y = (y->map_y + 1.0 - vars->posY) * y->dlt_dist_y;
   }
 }
-int calc_dda(t_x *x, t_y *y)
+t_data calc_dda(t_x *x, t_y *y)
 {
-  int hit;
-  int side;
-  double  per_wall_dist;
+  int     hit;
+  int     side;
+  t_data  data;
 
   hit = 0;
   while(hit == 0)
@@ -148,36 +148,60 @@ int calc_dda(t_x *x, t_y *y)
     if(worldMap[x->map_x][y->map_y] > 0)
       hit = 1;
   }
+  data.side = side;
   if(side == 0)
-    per_wall_dist = (x->side_dist_x - x->dlt_dist_x);
+    data.wall_dist = (x->side_dist_x - x->dlt_dist_x);
   else
-    per_wall_dist = (y->side_dist_y - y->dlt_dist_y);
-  return ((int)(WIN_HEIGHT / per_wall_dist));
+    data.wall_dist = (y->side_dist_y - y->dlt_dist_y);
+  data.wall_height  = WIN_HEIGHT / data.wall_dist;
+  return (data);
 }
 
-void  drawing(t_vars *vars, int i, int line_height)
+void  drawing(t_vars *vars, int i, t_data data)
 {
-  int draw_start;
-  int draw_end;
+  int     draw_start;
+  int     draw_end;
+  double  tex_pos;
   
-  draw_start = -line_height / 2 + WIN_HEIGHT / 2;
+  draw_start = -1 * data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_start < 0)
     draw_start = 0;
-  draw_end = line_height / 2 + WIN_HEIGHT / 2;
+  draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_end >= WIN_HEIGHT)
     draw_end = WIN_HEIGHT - 1;
+  tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step;
 	for(int j = draw_start; j < draw_end; j++)
-		  mlx_pixel_put(vars->mlx, vars->win, i, j, 255);
+  {
+    data.tex_y = (int) tex_pos & (vars->sample.img_height - 1);
+    tex_pos += data.step;
+		mlx_pixel_put(vars->mlx, vars->win, i, j, *(unsigned int *)(vars->sample.addr + data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)));
+  }
+}
 
+void  set_data(t_data *data, t_vars vars, t_x x, t_y y)
+{
+  double wall;
+
+  if (data->side == 0)
+    wall = vars.posY + data->wall_dist * y.ray_dir_y;
+  else
+    wall = vars.posX + data->wall_dist * x.ray_dir_x;
+  wall = wall - floor(wall);
+  data->tex_x = (int)(wall * (double)(vars.sample.img_width));
+  if (data->side == 0 && x.ray_dir_x > 0)
+      data->tex_x = vars.sample.img_width - data->tex_x - 1; 
+  else if (data->side == 1 && y.ray_dir_y < 0)
+      data->tex_x = vars.sample.img_width - data->tex_x - 1; 
+  data->step = (1.0 * vars.sample.img_width) / data->wall_height;
 }
 
 void	calc(t_vars *vars)
 {
-	int		i;
+	int     i;
 	double	camera;
-  t_x   x;
-  t_y   y;
-
+  t_x     x;
+  t_y     y;
+  t_data  data;
   mlx_clear_window(vars->mlx, vars->win);
 	i = 0;
 	while (i < WIN_WIDTH)
@@ -185,7 +209,9 @@ void	calc(t_vars *vars)
 		camera = 2 * i / (double)WIN_WIDTH - 1;
     set_value(vars, &x, &y, camera);
     first_step(vars, &x, &y);
-    drawing(vars, i, calc_dda(&x, &y));
+    data = calc_dda(&x, &y);
+    set_data(&data, *vars, x, y);
+    drawing(vars, i, data);
 		i++;
 	}
 	return ;
@@ -194,11 +220,10 @@ void	calc(t_vars *vars)
 int	main(void)
 {
 	t_vars vars;
-	t_data	img;
 
   //init vars
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH,WIN_HEIGHT, "Hello world!");
+	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH,WIN_HEIGHT, "cub3d!");
   vars.dirX = -1;
   vars.dirY = 0;
   vars.posX = 22;
@@ -206,11 +231,8 @@ int	main(void)
   vars.planeX = 0;
   vars.planeY = 0.66;
 
-	img.img = mlx_new_image(vars.mlx, WIN_WIDTH, WIN_HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+  vars.sample.img = mlx_xpm_file_to_image(vars.mlx, "./images/redbrick.xpm", &(vars.sample.img_width), &(vars.sample.img_height));
+  vars.sample.addr = mlx_get_data_addr(vars.sample.img, &(vars.sample.bits_per_pixel), &(vars.sample.size_len), &(vars.sample.endian));
   mlx_hook(vars.win, 2, 1L<<0, keypress, &vars);
   //mlx_hook(vars.win, 17, 1L<<0, keypress, &vars);
   calc(&vars);
