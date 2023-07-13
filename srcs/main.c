@@ -169,12 +169,12 @@ void  drawing(t_vars *vars, int i, t_data data)
   draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
   if(draw_end >= WIN_HEIGHT)
     draw_end = WIN_HEIGHT - 1;
-  tex_pos = (draw_start / 2 - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step;
+  tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step;
 	for(int j = draw_start; j < draw_end; j++)
   {
     data.tex_y = (int) tex_pos & (vars->sample.img_height - 1);
     tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j, vars->sample.addr[data.tex_y* vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)] + 128);
+		mlx_pixel_put(vars->mlx, vars->win, i, j, vars->sample.addr[data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)] + 128);
   }
 }
 
