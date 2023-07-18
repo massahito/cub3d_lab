@@ -31,14 +31,6 @@ int worldMap[mapWidth][mapHeight]=
 };
 
 
-void	my_mlx_pixel_put(t_img data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data.addr + (y * data.size_len + x * (data.bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
 int keypress(int keycode, t_vars *vars)
 {
   double moveSpeed = 0.3;
@@ -173,30 +165,42 @@ void  drawing(t_vars *vars, int i, t_data data)
   for(int j = 0; j < draw_start; j++)
     mlx_pixel_put(vars->mlx, vars->win, i, j, 0xfc5454);
 	for(int j = draw_start; j < draw_end; j++)
-  {
-    data.tex_y = (int) tex_pos & (vars->sample.img_height - 1);
-    tex_pos += data.step;
+  	{
+   		 data.tex_y = (int) tex_pos & (vars->sample.img_height - 1);
+   		 tex_pos += data.step;
 		mlx_pixel_put(vars->mlx, vars->win, i, j, *(unsigned int *)(vars->sample.addr + data.tex_y * vars->sample.size_len + data.tex_x * (vars->sample.bits_per_pixel / 8)));
   }
   for (int j = draw_end; j < WIN_HEIGHT; j++)
     mlx_pixel_put(vars->mlx, vars->win, i, j, 0x707070);
 }
 
-void  set_data(t_data *data, t_vars vars, t_x x, t_y y)
+void  set_data(t_data *data, t_vars *vars, t_x x, t_y y)
 {
   double wall;
 
   if (data->side == 0)
-    wall = vars.posY + data->wall_dist * y.ray_dir_y;
+  {
+    wall = vars->posY + data->wall_dist * y.ray_dir_y;
+	if (x.ray_dir_x < 0)
+		vars->sample = vars->wall[0];
+	else
+		vars->sample = vars->wall[1];
+  }
   else
-    wall = vars.posX + data->wall_dist * x.ray_dir_x;
+  {
+    wall = vars->posX + data->wall_dist * x.ray_dir_x;
+	if (y.ray_dir_y < 0)
+		vars->sample = vars->wall[2];
+	else
+		vars->sample = vars->wall[3];
+  }
   wall = wall - floor(wall);
-  data->tex_x = (int)(wall * (double)(vars.sample.img_width));
+  data->tex_x = (int)(wall * (double)(vars->sample.img_width));
   if (data->side == 0 && x.ray_dir_x > 0)
-      data->tex_x = vars.sample.img_width - data->tex_x - 1; 
+      data->tex_x = vars->sample.img_width - data->tex_x - 1; 
   else if (data->side == 1 && y.ray_dir_y < 0)
-      data->tex_x = vars.sample.img_width - data->tex_x - 1; 
-  data->step = (1.0 * vars.sample.img_width) / data->wall_height;
+      data->tex_x = vars->sample.img_width - data->tex_x - 1; 
+  data->step = (1.0 * vars->sample.img_width) / data->wall_height;
 }
 
 void	calc(t_vars *vars)
@@ -213,7 +217,7 @@ void	calc(t_vars *vars)
     set_value(vars, &x, &y, camera);
     first_step(vars, &x, &y);
     data = calc_dda(&x, &y);
-    set_data(&data, *vars, x, y);
+    set_data(&data, vars, x, y);
     drawing(vars, i, data);
 		i++;
 	}
@@ -234,8 +238,16 @@ int	main(void)
   vars.planeX = 0;
   vars.planeY = 0.66;
 
-  vars.sample.img = mlx_xpm_file_to_image(vars.mlx, "./images/redbrick.xpm", &(vars.sample.img_width), &(vars.sample.img_height));
-  vars.sample.addr = mlx_get_data_addr(vars.sample.img, &(vars.sample.bits_per_pixel), &(vars.sample.size_len), &(vars.sample.endian));
+  //iamge download
+  void	*img0 = mlx_xpm_file_to_image(vars.mlx, "./images/redbrick.xpm", &(vars.wall[0].img_width), &(vars.wall[0].img_height));
+  vars.wall[0].addr = mlx_get_data_addr(img0, &(vars.wall[0].bits_per_pixel), &(vars.wall[0].size_len), &(vars.wall[0].endian));
+  void	*img1 = mlx_xpm_file_to_image(vars.mlx, "./images/bluestone.xpm", &(vars.wall[1].img_width), &(vars.wall[1].img_height));
+  vars.wall[1].addr = mlx_get_data_addr(img1, &(vars.wall[1].bits_per_pixel), &(vars.wall[1].size_len), &(vars.wall[1].endian));
+  void	*img2 = mlx_xpm_file_to_image(vars.mlx, "./images/colorstone.xpm", &(vars.wall[2].img_width), &(vars.wall[2].img_height));
+  vars.wall[2].addr = mlx_get_data_addr(img2, &(vars.wall[2].bits_per_pixel), &(vars.wall[2].size_len), &(vars.wall[2].endian));
+  void	*img3 = mlx_xpm_file_to_image(vars.mlx, "./images/greystone.xpm", &(vars.wall[3].img_width), &(vars.wall[3].img_height));
+  vars.wall[3].addr = mlx_get_data_addr(img3, &(vars.wall[3].bits_per_pixel), &(vars.wall[3].size_len), &(vars.wall[3].endian));
+
   mlx_hook(vars.win, 2, 1L<<0, keypress, &vars);
   //mlx_hook(vars.win, 17, 1L<<0, keypress, &vars);
   calc(&vars);

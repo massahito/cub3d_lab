@@ -21,6 +21,7 @@ typedef struct s_vars
 	double	dirY;
 	double	planeX;
 	double	planeY;
+	t_img	wall[4];
 	t_img	sample;
 }	t_vars;
 
