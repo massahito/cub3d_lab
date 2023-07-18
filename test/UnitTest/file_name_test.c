@@ -13,7 +13,3 @@ void test_file_name(void)
 	CU_ASSERT_EQUAL(0, is_file_name_ok("halllo"));
 }
 
-void	map_info(void)
-{
-	CU_ASSERT_EQUAL(0, );
-}
