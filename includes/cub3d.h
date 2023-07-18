@@ -1,7 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 // includes
-# include "../includes/struct.h"
+# include "struct.h"
 # include <math.h>
 # include <mlx.h>
 # include <stdio.h>
