@@ -12,3 +12,4 @@ void test_file_name(void)
 	CU_ASSERT_EQUAL(1, is_file_name_ok(".cub"));
 	CU_ASSERT_EQUAL(0, is_file_name_ok("halllo"));
 }
+
