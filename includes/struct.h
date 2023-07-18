@@ -1,7 +1,8 @@
 #ifndef STRUCT_H
-#define STRUCT_H
+# define STRUCT_H
 
-typedef struct	s_img {
+typedef struct s_img
+{
 	void	*img;
 	int		img_height;
 	int		img_width;
@@ -9,7 +10,7 @@ typedef struct	s_img {
 	int		bits_per_pixel;
 	int		size_len;
 	int		endian;
-}				t_img;
+}			t_img;
 
 typedef struct s_vars
 {
@@ -23,7 +24,7 @@ typedef struct s_vars
 	double	planeY;
 	t_img	wall[4];
 	t_img	sample;
-}	t_vars;
+}			t_vars;
 
 typedef struct s_x
 {
@@ -32,7 +33,7 @@ typedef struct s_x
 	double	ray_dir_x;
 	double	side_dist_x;
 	double	dlt_dist_x;
-} t_x;
+}			t_x;
 
 typedef struct s_y
 {
@@ -41,9 +42,10 @@ typedef struct s_y
 	double	ray_dir_y;
 	double	side_dist_y;
 	double	dlt_dist_y;
-}		t_y;
+}			t_y;
 
-typedef struct s_data {
+typedef struct s_data
+{
 	int		side;
 	double	wall_dist;
 	int		wall_height;
@@ -51,6 +53,6 @@ typedef struct s_data {
 	int		tex_y;
 	double	tex_position;
 	double	step;
-}		t_data;
+}			t_data;
 
 #endif
