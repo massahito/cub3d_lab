@@ -187,7 +187,7 @@ void	drawing(t_vars *vars, int i, t_data data)
 	draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
 	if (draw_end >= WIN_HEIGHT)
 		draw_end = WIN_HEIGHT - 1;
-	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step;
+	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step - vars->sample.img_height / 2;
 	for (int j = 0; j < draw_start; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0xfc5454);
 	for (int j = draw_start; j < draw_end; j++)
@@ -195,8 +195,8 @@ void	drawing(t_vars *vars, int i, t_data data)
 		data.tex_y = (int)tex_pos & (vars->sample.img_height - 1);
 		tex_pos += data.step;
 		mlx_pixel_put(vars->mlx, vars->win, i, j,
-				*(unsigned int *)(vars->sample.addr + data.tex_y
-					* vars->sample.size_len + data.tex_x
+				*(int *)(vars->sample.addr + data.tex_y
+					*  vars->sample.size_len + data.tex_x
 					* (vars->sample.bits_per_pixel / 8)));
 	}
 	for (int j = draw_end; j < WIN_HEIGHT; j++)
@@ -272,7 +272,7 @@ int	main(void)
 	vars.planeX = 0;
 	vars.planeY = 0.66;
 	//iamge download
-	img0 = mlx_xpm_file_to_image(vars.mlx, "./images/redbrick.xpm",
+	img0 = mlx_xpm_file_to_image(vars.mlx, "./images/komurokei.xpm",
 			&(vars.wall[0].img_width), &(vars.wall[0].img_height));
 	vars.wall[0].addr = mlx_get_data_addr(img0, &(vars.wall[0].bits_per_pixel),
 			&(vars.wall[0].size_len), &(vars.wall[0].endian));

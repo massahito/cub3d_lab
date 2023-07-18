@@ -1,6 +1,6 @@
 NAME		=	cub3D
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror
 INCLUDE		=	-I ./minilibx-linux/ -I ./includes/
 LIBMACDIR	=	-L/usr/local/lib -L/usr/lib -L/usr/X11R6/lib
 LIBLNXDIR	=	-L/usr/local/lib -L/usr/lib -L./minilibx-linux
