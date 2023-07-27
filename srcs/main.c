@@ -3,7 +3,6 @@
 #define MAPHEIGHT 24
 #define PI 3.141592653589793
 
-/*
 int worldMap[MAPWIDTH][MAPHEIGHT]=
 {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -31,7 +30,6 @@ int worldMap[MAPWIDTH][MAPHEIGHT]=
   {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
-*/
 
 int	keypress(int keycode, t_vars *vars)
 {
@@ -206,16 +204,16 @@ void	drawing(t_vars *vars, int i, t_data data)
 	if (draw_end >= WIN_HEIGHT)
 		draw_end = WIN_HEIGHT - 1;
 	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step
-		- vars->sample.img_height / 2;
+		- data.img.img_height / 2;
 	for (int j = 0; j < draw_start; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0xfc5454);
 	for (int j = draw_start; j < draw_end; j++)
 	{
-		data.tex_y = (int)tex_pos & (vars->sample.img_height - 1);
+		data.tex_y = (int)tex_pos & (data.img.img_height - 1);
 		tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j, *(int *)(vars->sample.addr
-				+ data.tex_y * vars->sample.size_len + data.tex_x
-				* (vars->sample.bits_per_pixel / 8)));
+		mlx_pixel_put(vars->mlx, vars->win, i, j, *(int *)(data.img.addr
+				+ data.tex_y * data.img.size_len + data.tex_x
+				* (data.img.bits_per_pixel / 8)));
 	}
 	for (int j = draw_end; j < WIN_HEIGHT; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0x707070);
@@ -229,25 +227,25 @@ void	set_data(t_data *data, t_vars *vars, t_x x, t_y y)
 	{
 		wall = vars->pos_y + data->wall_dist * y.ray_dir_y;
 		if (x.ray_dir_x < 0)
-			vars->sample = vars->wall[0];
+			data->img = vars->wall[0];
 		else
-			vars->sample = vars->wall[1];
+			data->img = vars->wall[1];
 	}
 	else
 	{
 		wall = vars->pos_x + data->wall_dist * x.ray_dir_x;
 		if (y.ray_dir_y < 0)
-			vars->sample = vars->wall[2];
+			data->img = vars->wall[2];
 		else
-			vars->sample = vars->wall[3];
+			data->img = vars->wall[3];
 	}
 	wall = wall - floor(wall);
-	data->tex_x = (int)(wall * (double)(vars->sample.img_width));
+	data->tex_x = (int)(wall * (double)(data->img.img_width));
 	if (data->side == 0 && x.ray_dir_x > 0)
-		data->tex_x = vars->sample.img_width - data->tex_x - 1;
+		data->tex_x = data->img.img_width - data->tex_x - 1;
 	else if (data->side == 1 && y.ray_dir_y < 0)
-		data->tex_x = vars->sample.img_width - data->tex_x - 1;
-	data->step = (1.0 * vars->sample.img_width) / data->wall_height;
+		data->tex_x = data->img.img_width - data->tex_x - 1;
+	data->step = (1.0 * data->img.img_width) / data->wall_height;
 }
 
 void	calc(t_vars *vars)
