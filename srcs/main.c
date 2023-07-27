@@ -126,8 +126,14 @@ void	set_value(t_vars *vars, t_x *x, t_y *y, double camera)
 	y->ray_dir_y = vars->dir_y + vars->plane_y * camera;
 	x->map_x = (int)vars->pos_x;
 	y->map_y = (int)vars->pos_y;
-	x->dlt_dist_x = (x->ray_dir_x == 0) ? 1e30 : abs_double(1 / x->ray_dir_x);
-	y->dlt_dist_y = (y->ray_dir_y == 0) ? 1e30 : abs_double(1 / y->ray_dir_y);
+	if (x->ray_dir_x == 0)
+		x->dlt_dist_x = 1e30;
+	else
+		x->dlt_dist_x = abs_double(1 / x->ray_dir_x);
+	if (y->ray_dir_y == 0)
+		y->dlt_dist_y = 1e30;
+	else
+		y->dlt_dist_y = abs_double(1 / y->ray_dir_y);
 }
 
 void	first_step(t_vars *vars, t_x *x, t_y *y)
@@ -153,6 +159,7 @@ void	first_step(t_vars *vars, t_x *x, t_y *y)
 		y->side_dist_y = (y->map_y + 1.0 - vars->pos_y) * y->dlt_dist_y;
 	}
 }
+
 t_data	calc_dda(t_x *x, t_y *y)
 {
 	int		hit;
@@ -207,8 +214,8 @@ void	drawing(t_vars *vars, int i, t_data data)
 		data.tex_y = (int)tex_pos & (vars->sample.img_height - 1);
 		tex_pos += data.step;
 		mlx_pixel_put(vars->mlx, vars->win, i, j, *(int *)(vars->sample.addr
-					+ data.tex_y * vars->sample.size_len + data.tex_x
-					* (vars->sample.bits_per_pixel / 8)));
+				+ data.tex_y * vars->sample.size_len + data.tex_x
+				* (vars->sample.bits_per_pixel / 8)));
 	}
 	for (int j = draw_end; j < WIN_HEIGHT; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0x707070);
