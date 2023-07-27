@@ -52,14 +52,19 @@ void check_file_name(char *str)
 void check_north(char *str)
 {
     int i;
+    char *north_texture;
 
     i = 0;
-    if(!str  || !*str)
-    {
-        error("Error   File name is empty.\n");
-        return ;
-    }
-    
+    // if(!str  || !*str)
+    // {
+    //     error("Error   File name is empty.\n");
+    //     return ;
+    // }
+    str+=2;
+    while(is_space(*str))
+        str++;
+    north_texture = strdup(str);        
+
 }
 
 /**
@@ -131,42 +136,53 @@ void check_north(char *str)
 */
 
 
-
+/**
+ * texture check
+*/
 int main()
 {
-    // char *str = "NO ./path_to_the_north_texture"
-    /**
-     * ファイル名が".cub"で終わっているか確認するためのテストの文字列を１０個 
-     * 例)char *filename = "map..cub";
-    */
-    char *filename = "map.cub";
-    char *filename1 = "map.cu";
-    char *filename2 = "map.c";
-    char *filename3 = "map.";
-    char *filename4 = "map";
-    char *filename5 = "map.cub";
-    char *filename6 = "map.cu";
-    char *filename7 = "map.c";
-    char *filename8 = "map.";
-    char *filename9 = "map";
-    char *filename10 = "";
-    char *filename11 = NULL;
-
-    check_file_name(filename);
-    check_file_name(filename1);
-    check_file_name(filename2);
-    check_file_name(filename3);
-    check_file_name(filename4);
-    check_file_name(filename5);
-    check_file_name(filename6);
-    check_file_name(filename7);
-    check_file_name(filename8);
-    check_file_name(filename9);
-    check_file_name(filename10);
-    check_file_name(filename11);
+    char *str = "NO ./path_to_the_north_texture";
 
     return 0;
 }
+
+/**
+ * filenamecheck
+*/
+// int main()
+// {
+//     /**
+//      * ファイル名が".cub"で終わっているか確認するためのテストの文字列を１０個 
+//      * 例)char *filename = "map..cub";
+//     */
+//     char *filename = "map.cub";
+//     char *filename1 = "map.cu";
+//     char *filename2 = "map.c";
+//     char *filename3 = "map.";
+//     char *filename4 = "map";
+//     char *filename5 = "map.cub";
+//     char *filename6 = "map.cu";
+//     char *filename7 = "map.c";
+//     char *filename8 = "map.";
+//     char *filename9 = "map";
+//     char *filename10 = "";
+//     char *filename11 = NULL;
+
+//     check_file_name(filename);
+//     check_file_name(filename1);
+//     check_file_name(filename2);
+//     check_file_name(filename3);
+//     check_file_name(filename4);
+//     check_file_name(filename5);
+//     check_file_name(filename6);
+//     check_file_name(filename7);
+//     check_file_name(filename8);
+//     check_file_name(filename9);
+//     check_file_name(filename10);
+//     check_file_name(filename11);
+
+//     return 0;
+// }
 
 static void error(char *str)
 {
