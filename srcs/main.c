@@ -3,6 +3,7 @@
 #define MAPHEIGHT 24
 #define PI 3.141592653589793
 
+/*
 int worldMap[MAPWIDTH][MAPHEIGHT]=
 {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -30,6 +31,7 @@ int worldMap[MAPWIDTH][MAPHEIGHT]=
   {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
+*/
 
 int	keypress(int keycode, t_vars *vars)
 {
@@ -65,31 +67,37 @@ int	keypress(int keycode, t_vars *vars)
 	}
 	else if (keycode == A_KEY)
 	{
-		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(PI / 2) - vars->dir_y
-					* sin(PI / 2)) * move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += (vars->dir_x * cos(PI / 2) - vars->dir_y * sin(PI / 2))
-				* move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x * sin(PI
-						/ 2) + vars->dir_y * cos(PI / 2)) * move_speed)] == 0)
-			vars->pos_y += (vars->dir_x * sin(PI / 2) + vars->dir_y * cos(PI / 2))
-				* move_speed;
+		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(PI / 2)
+					- vars->dir_y * sin(PI / 2))
+				* move_speed)][(int)vars->pos_y] == 0)
+			vars->pos_x += (vars->dir_x * cos(PI / 2) - vars->dir_y * sin(PI
+						/ 2)) * move_speed;
+		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
+					* sin(PI / 2) + vars->dir_y * cos(PI / 2))
+				* move_speed)] == 0)
+			vars->pos_y += (vars->dir_x * sin(PI / 2) + vars->dir_y * cos(PI
+						/ 2)) * move_speed;
 	}
 	else if (keycode == D_KEY)
 	{
-		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(-PI / 2) - vars->dir_y
-					* sin(-PI / 2)) * move_speed)][(int)vars->pos_y] == 0)
+		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(-PI / 2)
+					- vars->dir_y * sin(-PI / 2))
+				* move_speed)][(int)vars->pos_y] == 0)
 			vars->pos_x += (vars->dir_x * cos(-PI / 2) - vars->dir_y * sin(-PI
 						/ 2)) * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x * sin(-PI
-						/ 2) + vars->dir_y * cos(-PI / 2)) * move_speed)] == 0)
+		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
+					* sin(-PI / 2) + vars->dir_y * cos(-PI / 2))
+				* move_speed)] == 0)
 			vars->pos_y += (vars->dir_x * sin(-PI / 2) + vars->dir_y * cos(-PI
 						/ 2)) * move_speed;
 	}
 	else if (keycode == R_ALW)
 	{
 		olddir_x = vars->dir_x;
-		vars->dir_x = vars->dir_x * cos(-rot_speed) - vars->dir_y * sin(-rot_speed);
-		vars->dir_y = olddir_x * sin(-rot_speed) + vars->dir_y * cos(-rot_speed);
+		vars->dir_x = vars->dir_x * cos(-rot_speed) - vars->dir_y
+			* sin(-rot_speed);
+		vars->dir_y = olddir_x * sin(-rot_speed) + vars->dir_y
+			* cos(-rot_speed);
 		oldplane_x = vars->plane_x;
 		vars->plane_x = vars->plane_x * cos(-rot_speed) - vars->plane_y
 			* sin(-rot_speed);
@@ -99,16 +107,19 @@ int	keypress(int keycode, t_vars *vars)
 	else if (keycode == L_ALW)
 	{
 		olddir_x = vars->dir_x;
-		vars->dir_x = vars->dir_x * cos(rot_speed) - vars->dir_y * sin(rot_speed);
+		vars->dir_x = vars->dir_x * cos(rot_speed) - vars->dir_y
+			* sin(rot_speed);
 		vars->dir_y = olddir_x * sin(rot_speed) + vars->dir_y * cos(rot_speed);
 		oldplane_x = vars->plane_x;
 		vars->plane_x = vars->plane_x * cos(rot_speed) - vars->plane_y
 			* sin(rot_speed);
-		vars->plane_y = oldplane_x * sin(rot_speed) + vars->plane_y * cos(rot_speed);
+		vars->plane_y = oldplane_x * sin(rot_speed) + vars->plane_y
+			* cos(rot_speed);
 	}
 	calc(vars);
 	return (0);
 }
+
 void	set_value(t_vars *vars, t_x *x, t_y *y, double camera)
 {
 	x->ray_dir_x = vars->dir_x + vars->plane_x * camera;
@@ -118,6 +129,7 @@ void	set_value(t_vars *vars, t_x *x, t_y *y, double camera)
 	x->dlt_dist_x = (x->ray_dir_x == 0) ? 1e30 : abs_double(1 / x->ray_dir_x);
 	y->dlt_dist_y = (y->ray_dir_y == 0) ? 1e30 : abs_double(1 / y->ray_dir_y);
 }
+
 void	first_step(t_vars *vars, t_x *x, t_y *y)
 {
 	if (x->ray_dir_x < 0)
@@ -186,17 +198,17 @@ void	drawing(t_vars *vars, int i, t_data data)
 	draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
 	if (draw_end >= WIN_HEIGHT)
 		draw_end = WIN_HEIGHT - 1;
-	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step - vars->sample.img_height / 2;
+	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step
+		- vars->sample.img_height / 2;
 	for (int j = 0; j < draw_start; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0xfc5454);
 	for (int j = draw_start; j < draw_end; j++)
 	{
 		data.tex_y = (int)tex_pos & (vars->sample.img_height - 1);
 		tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j,
-			*(int *)(vars->sample.addr + data.tex_y
-			*  vars->sample.size_len + data.tex_x
-			* (vars->sample.bits_per_pixel / 8)));
+		mlx_pixel_put(vars->mlx, vars->win, i, j, *(int *)(vars->sample.addr
+					+ data.tex_y * vars->sample.size_len + data.tex_x
+					* (vars->sample.bits_per_pixel / 8)));
 	}
 	for (int j = draw_end; j < WIN_HEIGHT; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0x707070);
