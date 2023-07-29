@@ -1,10 +1,9 @@
 #include "cub3d.h"
-#define mapWidth 24
-#define mapHeight 24
+#define MAPWIDTH 24
+#define MAPHEIGHT 24
+#define PI 3.141592653589793
 
-static const double	pi = 3.141592653589793;
-
-int worldMap[mapWidth][mapHeight]=
+int worldMap[MAPWIDTH][MAPHEIGHT]=
 {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -34,13 +33,13 @@ int worldMap[mapWidth][mapHeight]=
 
 int	keypress(int keycode, t_vars *vars)
 {
-	double	moveSpeed;
-	double	rotSpeed;
-	double	oldDirX;
-	double	oldPlaneX;
+	double	move_speed;
+	double	rot_speed;
+	double	olddir_x;
+	double	oldplane_x;
 
-	moveSpeed = 0.3;
-	rotSpeed = 0.2;
+	move_speed = 0.3;
+	rot_speed = 0.2;
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
@@ -48,100 +47,117 @@ int	keypress(int keycode, t_vars *vars)
 	}
 	else if (keycode == W_KEY)
 	{
-		if (worldMap[(int)(vars->posX + vars->dirX
-				* moveSpeed)][(int)vars->posY] == 0)
-			vars->posX += vars->dirX * moveSpeed;
-		if (worldMap[(int)(vars->posX)][(int)(vars->posY + vars->dirY
-				* moveSpeed)] == 0)
-			vars->posY += vars->dirY * moveSpeed;
+		if (worldMap[(int)(vars->pos_x + vars->dir_x
+				* move_speed)][(int)vars->pos_y] == 0)
+			vars->pos_x += vars->dir_x * move_speed;
+		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + vars->dir_y
+				* move_speed)] == 0)
+			vars->pos_y += vars->dir_y * move_speed;
 	}
 	else if (keycode == S_KEY)
 	{
-		if (worldMap[(int)(vars->posX - vars->dirX
-				* moveSpeed)][(int)vars->posY] == 0)
-			vars->posX -= vars->dirX * moveSpeed;
-		if (worldMap[(int)(vars->posX)][(int)(vars->posY - vars->dirY
-				* moveSpeed)] == 0)
-			vars->posY -= vars->dirY * moveSpeed;
+		if (worldMap[(int)(vars->pos_x - vars->dir_x
+				* move_speed)][(int)vars->pos_y] == 0)
+			vars->pos_x -= vars->dir_x * move_speed;
+		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y - vars->dir_y
+				* move_speed)] == 0)
+			vars->pos_y -= vars->dir_y * move_speed;
 	}
 	else if (keycode == A_KEY)
 	{
-		if (worldMap[(int)(vars->posX + (vars->dirX * cos(pi / 2) - vars->dirY
-					* sin(pi / 2)) * moveSpeed)][(int)vars->posY] == 0)
-			vars->posX += (vars->dirX * cos(pi / 2) - vars->dirY * sin(pi / 2))
-				* moveSpeed;
-		if (worldMap[(int)(vars->posX)][(int)(vars->posY + (vars->dirX * sin(pi
-						/ 2) + vars->dirY * cos(pi / 2)) * moveSpeed)] == 0)
-			vars->posY += (vars->dirX * sin(pi / 2) + vars->dirY * cos(pi / 2))
-				* moveSpeed;
+		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(PI / 2)
+					- vars->dir_y * sin(PI / 2))
+				* move_speed)][(int)vars->pos_y] == 0)
+			vars->pos_x += (vars->dir_x * cos(PI / 2) - vars->dir_y * sin(PI
+						/ 2)) * move_speed;
+		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
+					* sin(PI / 2) + vars->dir_y * cos(PI / 2))
+				* move_speed)] == 0)
+			vars->pos_y += (vars->dir_x * sin(PI / 2) + vars->dir_y * cos(PI
+						/ 2)) * move_speed;
 	}
 	else if (keycode == D_KEY)
 	{
-		if (worldMap[(int)(vars->posX + (vars->dirX * cos(-pi / 2) - vars->dirY
-					* sin(-pi / 2)) * moveSpeed)][(int)vars->posY] == 0)
-			vars->posX += (vars->dirX * cos(-pi / 2) - vars->dirY * sin(-pi
-						/ 2)) * moveSpeed;
-		if (worldMap[(int)(vars->posX)][(int)(vars->posY + (vars->dirX * sin(-pi
-						/ 2) + vars->dirY * cos(-pi / 2)) * moveSpeed)] == 0)
-			vars->posY += (vars->dirX * sin(-pi / 2) + vars->dirY * cos(-pi
-						/ 2)) * moveSpeed;
+		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(-PI / 2)
+					- vars->dir_y * sin(-PI / 2))
+				* move_speed)][(int)vars->pos_y] == 0)
+			vars->pos_x += (vars->dir_x * cos(-PI / 2) - vars->dir_y * sin(-PI
+						/ 2)) * move_speed;
+		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
+					* sin(-PI / 2) + vars->dir_y * cos(-PI / 2))
+				* move_speed)] == 0)
+			vars->pos_y += (vars->dir_x * sin(-PI / 2) + vars->dir_y * cos(-PI
+						/ 2)) * move_speed;
 	}
 	else if (keycode == R_ALW)
 	{
-		oldDirX = vars->dirX;
-		vars->dirX = vars->dirX * cos(-rotSpeed) - vars->dirY * sin(-rotSpeed);
-		vars->dirY = oldDirX * sin(-rotSpeed) + vars->dirY * cos(-rotSpeed);
-		oldPlaneX = vars->planeX;
-		vars->planeX = vars->planeX * cos(-rotSpeed) - vars->planeY
-			* sin(-rotSpeed);
-		vars->planeY = oldPlaneX * sin(-rotSpeed) + vars->planeY
-			* cos(-rotSpeed);
+		olddir_x = vars->dir_x;
+		vars->dir_x = vars->dir_x * cos(-rot_speed) - vars->dir_y
+			* sin(-rot_speed);
+		vars->dir_y = olddir_x * sin(-rot_speed) + vars->dir_y
+			* cos(-rot_speed);
+		oldplane_x = vars->plane_x;
+		vars->plane_x = vars->plane_x * cos(-rot_speed) - vars->plane_y
+			* sin(-rot_speed);
+		vars->plane_y = oldplane_x * sin(-rot_speed) + vars->plane_y
+			* cos(-rot_speed);
 	}
 	else if (keycode == L_ALW)
 	{
-		oldDirX = vars->dirX;
-		vars->dirX = vars->dirX * cos(rotSpeed) - vars->dirY * sin(rotSpeed);
-		vars->dirY = oldDirX * sin(rotSpeed) + vars->dirY * cos(rotSpeed);
-		oldPlaneX = vars->planeX;
-		vars->planeX = vars->planeX * cos(rotSpeed) - vars->planeY
-			* sin(rotSpeed);
-		vars->planeY = oldPlaneX * sin(rotSpeed) + vars->planeY * cos(rotSpeed);
+		olddir_x = vars->dir_x;
+		vars->dir_x = vars->dir_x * cos(rot_speed) - vars->dir_y
+			* sin(rot_speed);
+		vars->dir_y = olddir_x * sin(rot_speed) + vars->dir_y * cos(rot_speed);
+		oldplane_x = vars->plane_x;
+		vars->plane_x = vars->plane_x * cos(rot_speed) - vars->plane_y
+			* sin(rot_speed);
+		vars->plane_y = oldplane_x * sin(rot_speed) + vars->plane_y
+			* cos(rot_speed);
 	}
 	calc(vars);
 	return (0);
 }
+
 void	set_value(t_vars *vars, t_x *x, t_y *y, double camera)
 {
-	x->ray_dir_x = vars->dirX + vars->planeX * camera;
-	y->ray_dir_y = vars->dirY + vars->planeY * camera;
-	x->map_x = (int)vars->posX;
-	y->map_y = (int)vars->posY;
-	x->dlt_dist_x = (x->ray_dir_x == 0) ? 1e30 : abs_double(1 / x->ray_dir_x);
-	y->dlt_dist_y = (y->ray_dir_y == 0) ? 1e30 : abs_double(1 / y->ray_dir_y);
+	x->ray_dir_x = vars->dir_x + vars->plane_x * camera;
+	y->ray_dir_y = vars->dir_y + vars->plane_y * camera;
+	x->map_x = (int)vars->pos_x;
+	y->map_y = (int)vars->pos_y;
+	if (x->ray_dir_x == 0)
+		x->dlt_dist_x = 1e30;
+	else
+		x->dlt_dist_x = abs_double(1 / x->ray_dir_x);
+	if (y->ray_dir_y == 0)
+		y->dlt_dist_y = 1e30;
+	else
+		y->dlt_dist_y = abs_double(1 / y->ray_dir_y);
 }
+
 void	first_step(t_vars *vars, t_x *x, t_y *y)
 {
 	if (x->ray_dir_x < 0)
 	{
 		x->step_x = -1;
-		x->side_dist_x = (vars->posX - x->map_x) * x->dlt_dist_x;
+		x->side_dist_x = (vars->pos_x - x->map_x) * x->dlt_dist_x;
 	}
 	else
 	{
 		x->step_x = 1;
-		x->side_dist_x = (x->map_x + 1.0 - vars->posX) * x->dlt_dist_x;
+		x->side_dist_x = (x->map_x + 1.0 - vars->pos_x) * x->dlt_dist_x;
 	}
 	if (y->ray_dir_y < 0)
 	{
 		y->step_y = -1;
-		y->side_dist_y = (vars->posY - y->map_y) * y->dlt_dist_y;
+		y->side_dist_y = (vars->pos_y - y->map_y) * y->dlt_dist_y;
 	}
 	else
 	{
 		y->step_y = 1;
-		y->side_dist_y = (y->map_y + 1.0 - vars->posY) * y->dlt_dist_y;
+		y->side_dist_y = (y->map_y + 1.0 - vars->pos_y) * y->dlt_dist_y;
 	}
 }
+
 t_data	calc_dda(t_x *x, t_y *y)
 {
 	int		hit;
@@ -187,17 +203,17 @@ void	drawing(t_vars *vars, int i, t_data data)
 	draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
 	if (draw_end >= WIN_HEIGHT)
 		draw_end = WIN_HEIGHT - 1;
-	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step - vars->sample.img_height / 2;
+	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step
+		- data.img.img_height / 2;
 	for (int j = 0; j < draw_start; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0xfc5454);
 	for (int j = draw_start; j < draw_end; j++)
 	{
-		data.tex_y = (int)tex_pos & (vars->sample.img_height - 1);
+		data.tex_y = (int)tex_pos & (data.img.img_height - 1);
 		tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j,
-				*(int *)(vars->sample.addr + data.tex_y
-					*  vars->sample.size_len + data.tex_x
-					* (vars->sample.bits_per_pixel / 8)));
+		mlx_pixel_put(vars->mlx, vars->win, i, j, *(int *)(data.img.addr
+				+ data.tex_y * data.img.size_len + data.tex_x
+				* (data.img.bits_per_pixel / 8)));
 	}
 	for (int j = draw_end; j < WIN_HEIGHT; j++)
 		mlx_pixel_put(vars->mlx, vars->win, i, j, 0x707070);
@@ -209,27 +225,27 @@ void	set_data(t_data *data, t_vars *vars, t_x x, t_y y)
 
 	if (data->side == 0)
 	{
-		wall = vars->posY + data->wall_dist * y.ray_dir_y;
+		wall = vars->pos_y + data->wall_dist * y.ray_dir_y;
 		if (x.ray_dir_x < 0)
-			vars->sample = vars->wall[0];
+			data->img = vars->wall[0];
 		else
-			vars->sample = vars->wall[1];
+			data->img = vars->wall[1];
 	}
 	else
 	{
-		wall = vars->posX + data->wall_dist * x.ray_dir_x;
+		wall = vars->pos_x + data->wall_dist * x.ray_dir_x;
 		if (y.ray_dir_y < 0)
-			vars->sample = vars->wall[2];
+			data->img = vars->wall[2];
 		else
-			vars->sample = vars->wall[3];
+			data->img = vars->wall[3];
 	}
 	wall = wall - floor(wall);
-	data->tex_x = (int)(wall * (double)(vars->sample.img_width));
+	data->tex_x = (int)(wall * (double)(data->img.img_width));
 	if (data->side == 0 && x.ray_dir_x > 0)
-		data->tex_x = vars->sample.img_width - data->tex_x - 1;
+		data->tex_x = data->img.img_width - data->tex_x - 1;
 	else if (data->side == 1 && y.ray_dir_y < 0)
-		data->tex_x = vars->sample.img_width - data->tex_x - 1;
-	data->step = (1.0 * vars->sample.img_width) / data->wall_height;
+		data->tex_x = data->img.img_width - data->tex_x - 1;
+	data->step = (1.0 * data->img.img_width) / data->wall_height;
 }
 
 void	calc(t_vars *vars)
@@ -265,12 +281,12 @@ int	main(void)
 	//init vars
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
-	vars.dirX = -1;
-	vars.dirY = 0;
-	vars.posX = 22;
-	vars.posY = 12;
-	vars.planeX = 0;
-	vars.planeY = 0.66;
+	vars.dir_x = -1;
+	vars.dir_y = 0;
+	vars.pos_x = 22;
+	vars.pos_y = 12;
+	vars.plane_x = 0;
+	vars.plane_y = 0.66;
 	//iamge download
 	img0 = mlx_xpm_file_to_image(vars.mlx, "./images/komurokei.xpm",
 			&(vars.wall[0].img_width), &(vars.wall[0].img_height));

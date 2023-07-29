@@ -16,14 +16,13 @@ typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 	t_img	wall[4];
-	t_img	sample;
 }			t_vars;
 
 typedef struct s_x
@@ -53,6 +52,7 @@ typedef struct s_data
 	int		tex_y;
 	double	tex_position;
 	double	step;
+	t_img	img;
 }			t_data;
 
 #endif
