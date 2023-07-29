@@ -1,4 +1,4 @@
-#include "cub.h"
+#include "cub3d.h"
 
 t_map_list *map_last(t_map_list *map_list)
 {
@@ -10,14 +10,13 @@ t_map_list *map_last(t_map_list *map_list)
     return (tmp);
 }
 
-
 t_map_list  *new_map_list(char *line)
 {
     t_map_list *new;
 
     new = (t_map_list *)malloc(sizeof(t_map_list));
     if(!new)
-        ERR;
+        MALLOC_ERR;
     new->line = line;
     new->next = NULL;
     new->prev = NULL;
@@ -81,6 +80,18 @@ void free_map_clear(t_map_list *map_list)
     }
 }
 
+void free_map_list(t_map_list *map_list)
+{
+    t_map_list *tmp;
+
+    while(map_list)
+    {
+        tmp = map_list->next;
+        free_map_clear(map_list);
+        map_list = tmp;
+    }
+}
+
 bool is_no_str(char *line)
 {
     while(isspace(*line))
@@ -124,14 +135,14 @@ char *delete_line_break(char *line)
         return line;
     new = (char *)malloc(sizeof(char) * len);
     if(!new)
-        ERR;
+        MALLOC_ERR;
     strncpy(new, line, len - 1);
     new[len - 1] = '\0';
     free(line);
     return (new);
 }
 
-void read_map(t_map_list **map_list, int fd)
+int read_map(t_map_list **map_list, int fd)
 {
     char *line;
 
@@ -139,7 +150,10 @@ void read_map(t_map_list **map_list, int fd)
     {
         line = get_next_line(fd);
         if(line == NULL)
-            ERR;
+        {
+            return error("Map not found",NULL, NULL,2);
+
+        }
         else if(strcmp(line, "") == 0 || strcmp(line, "\n") == 0)
         {
             free(line);
@@ -148,15 +162,14 @@ void read_map(t_map_list **map_list, int fd)
         else
             break;
     }
-    // *map_list = new_map_list(line);
     add_map_list(map_list, delete_line_break(line));
     while(1)
     {
         line = get_next_line(fd);
         if(line == NULL)
             break;
-        // printf("%s\n",line);
         add_map_list(map_list, delete_line_break(line));
     }
     delete_map_space(map_list);
+    return 0;
 }

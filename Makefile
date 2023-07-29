@@ -1,6 +1,7 @@
 NAME		=	cub3D
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=leak
+# CFLAGS		=	-Wall -Wextra -Werror
 INCLUDE		=	-I ./minilibx-linux/ -I ./includes/
 LIBMACDIR	=	-L/usr/local/lib -L/usr/lib -L/usr/X11R6/lib
 LIBLNXDIR	=	-L/usr/local/lib -L/usr/lib -L./minilibx-linux
@@ -12,32 +13,53 @@ OBJDIR		=	obj
 OBJS		=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 VPATH		=	./srcs/
 
+MAKE		= make --no-print-directory
+
+GNLDIR		=	get_next_line
+GNLNAME		=	$(GNLDIR)/gnl.a
+GNL			=	$(GNLNAME)
+
+LIBFTDIR 	= libft
+LIBFTNAME 	= $(LIBFTDIR)/libft.a
+LIBFT 		= $(LIBFTNAME)
+
 all: $(NAME)
-$(NAME):$(OBJS) $(LIBFT) $(MLXLIB)
+$(NAME):$(OBJS) $(MLXLIB) $(LIBFTNAME) $(GNLNAME)
 ifeq ($(shell uname -s),Linux)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBLNXDIR) $(LIBLNX) $(MLXLIB) -o $(NAME)
+	$(CC) $(CFLAGS) $^ $(LIBLNXDIR) $(LIBLNX) $(MLXLIB) -o $(NAME)
 else
-	$(CC) $(CFLAGS) $(OBJS) $(LIBMACDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
+	$(CC) $(CFLAGS) $^ $(LIBMACDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
 endif
 
 $(MLXLIB):
-	@make -C ./minilibx-linux
+	@$(MAKE) -C ./minilibx-linux
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $$(dirname $@)
 	$(CC) $(INCLUDE) $(CFLAGS) -o $@ -c $<
 
+$(LIBFTNAME):
+	$(MAKE) --no-print-directory -C $(LIBFTDIR)
+
+$(GNLNAME):
+	$(MAKE) --no-print-directory -C $(GNLDIR)
+
 UnitTest:
-	make -C test/UnitTest
+	$(MAKE) -C test/UnitTest
 	./test/UnitTest/UnitTest
 clean:
 	rm -rf $(OBJDIR)
-	make clean -C ./test/UnitTest/
+	$(MAKE) clean -C ./test/UnitTest/
+	$(MAKE) --no-print-directory -C libft clean
+	$(MAKE) --no-print-directory -C get_next_line clean
+
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C ./test/UnitTest/
+	$(MAKE) fclean -C ./test/UnitTest/
+	$(MAKE) --no-print-directory -C libft fclean
+	$(MAKE) --no-print-directory -C get_next_line fclean
 re:	fclean all
 
 .PHONY:
-	all clean fclean re
+	all clean fclean re Libft UnitTest
 

@@ -254,7 +254,7 @@ void	calc(t_vars *vars)
 	return ;
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_vars	vars;
 	void	*img0;
@@ -262,6 +262,23 @@ int	main(void)
 	void	*img2;
 	void	*img3;
 
+	/**
+	 * 
+	*/
+	if (argc != 2)
+	{
+		error("Invalid argument",NULL,NULL,EXIT_FAILURE);
+		exit(EXIT_FAILURE);
+	}
+    if(check_file_name(argv[1]))
+	{
+		error("Invalid file name: ",argv[1],NULL,EXIT_FAILURE);
+		exit(EXIT_FAILURE);
+	}
+	read_cub_file(argv[1]);
+	/**
+	 * 
+	*/
 	//init vars
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");

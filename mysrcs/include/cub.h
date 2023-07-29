@@ -32,9 +32,31 @@
 // # define R_ALW 124
 // # define L_ALW 123
 
+/**    X  */
+#define C 88
+/**    1  */
+// #define C 49
+
+typedef struct s_map_list t_map_list;
+struct s_map_list
+{
+    char *line;
+    t_map_list *next;
+    t_map_list *prev;
+};
 //function prototypes
 //main.c
-void read_map(int fd);
+void read_map(t_map_list **map_list, int fd);
 void error(void);
+size_t map_list_size(t_map_list *map_list);
+bool is_no_str(char *line);
+void map_check(t_map_list **map_list);
+t_map_list  *new_map_list(char *line);
+t_map_list *map_last(t_map_list *map_list);
+char **make_map(t_map_list *map_list);
+void print_map(char **map);
+
+//file_name_check.c
+bool check_file_name(char *str);
 
 #endif

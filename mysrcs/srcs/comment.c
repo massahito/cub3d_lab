@@ -303,12 +303,47 @@ void read_fc_color(t_texture_name **texture_name, int fd)
     }
 }
 
+void print_map(char **map)
+{
+    int i;
+
+    i = 0;
+    while(map[i])
+    {
+        printf("%s\n", map[i]);
+        i++;
+    }
+}
+char **make_map(t_map_list *map_list)
+{
+    char **map;
+    t_map_list *tmp;
+    int i;
+
+    tmp = map_list;
+    map = (char **)malloc(sizeof(char *) * (map_list_size(map_list) + 1));
+    if(!map)
+        ERR;
+    i = 0;
+    while(tmp)
+    {
+        map[i] = tmp->line;
+        tmp = tmp->next;
+        i++;
+    }
+    map[i] = NULL;
+    return (map);
+}
+
+
+
+
 void read_cub_file(char *argv)
 {
     int file_fd;
     t_texture_name *texture_name;
-
-
+    t_map_list *map_list;
+    map_list = NULL;
     file_fd = open(argv,O_RDONLY);
     if(file_fd == -1)
         ERR;
@@ -316,21 +351,33 @@ void read_cub_file(char *argv)
     if(!texture_name)
         ERR;
     read_azimuths(&texture_name, file_fd);
-    printf("north:%s",texture_name->north);
-    printf("south:%s",texture_name->south);
-    printf("west:%s",texture_name->west);
-    printf("east:%s",texture_name->east);
     read_fc_color(&texture_name, file_fd);
-    printf("floor:%s",texture_name->floor);
-    printf("ceiling:%s",texture_name->ceiling);
-    read_map(file_fd);
-    write(1,"ok\n",3);
+    read_map(&map_list, file_fd);
     close(file_fd);
+
+    map_check(&map_list);
+    // printf("north:%s",texture_name->north);
+    // printf("south:%s",texture_name->south);
+    // printf("west:%s",texture_name->west);
+    // printf("east:%s",texture_name->east);
+    // printf("floor:%s",texture_name->floor);
+    // printf("ceiling:%s",texture_name->ceiling);
+
+    // char **map;
+    // map = make_map(map_list);
+
+    // print_map(map);
 
 }
 
 /**
  * texture check
+*/
+/**
+ * 実行方法
+ * make
+ * ./cub3D map/map1.cub
+ *  など
 */
 int main(int argc, char **argv)
 {
