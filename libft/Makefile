@@ -6,7 +6,7 @@
 #    By: ubuntu2204 <ubuntu2204@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/30 11:18:56 by kyoda             #+#    #+#              #
-#    Updated: 2023/07/29 17:57:47 by ubuntu2204       ###   ########.fr        #
+#    Updated: 2023/07/29 21:44:57 by ubuntu2204       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ INCLUDE		= -I ../includes/
 CFLAGS		= -Wall -Wextra -Werror
 
 SRCS		=	ft_atoi.c 		\
-				ft_atol.c		\
 				ft_calloc.c 	\
 				ft_isalpha.c 	\
 				ft_isdigit.c 	\
