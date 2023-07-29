@@ -36,17 +36,6 @@ void free_azimuths(t_texture_name *texture_name)
     }
     
 }
-// void print_map(char **map)
-// {
-//     int i;
-
-//     i = 0;
-//     while(map[i])
-//     {
-//         printf("%s\n", map[i]);
-//         i++;
-//     }
-// }
 
 void map_free(char **map)
 {
@@ -90,7 +79,22 @@ char **make_map(t_map_list *map_list)
     return (map);
 }
 
+int fill_in_one_line(char *line)
+{
+    int i;
 
+    i = 0;
+
+    while(line[i])
+    {
+        if(line[i] == C)
+            line[i] = '1';
+        i++;
+    }
+    return 0;
+}
+
+void prints(t_texture_name *texture_name,t_map_list *map_list);
 void read_cub_file(char *argv)
 {
     int file_fd;
@@ -103,7 +107,11 @@ void read_cub_file(char *argv)
         MALLOC_ERR;
     file_fd = open(argv,O_RDONLY);
     if(file_fd == -1)
+    {
         error("cub file open error", NULL, NULL,EXIT_FAILURE);
+        free_azimuths(texture_name);
+        exit(EXIT_FAILURE);
+    }
     if(read_azimuths(&texture_name, file_fd))
     {
         close(file_fd);
@@ -130,7 +138,45 @@ void read_cub_file(char *argv)
         free_map_list(map_list);
         exit(EXIT_FAILURE);
     }
+    apply_list(map_list, fill_in_one_line);
+    prints(texture_name,map_list);
     close(file_fd);
     free_azimuths(texture_name);
     free_map_list(map_list);
+}
+
+
+/**
+ * どこに何が入ってるかチェックするための関数
+*/
+void print_map(char **map)
+{
+    int i;
+
+    i = 0;
+    while(map[i])
+    {
+        // printf("%s", map[i]);
+        printf("%s\n", map[i]);
+        i++;
+    }
+    fflush(stdout);
+    map_free(map);
+}
+
+void prints(t_texture_name *texture_name,t_map_list *map_list)
+{
+    // printf("NO : %s", texture_name->north);
+    // printf("SO : %s", texture_name->south);
+    // printf("WE : %s", texture_name->west);
+    // printf("EA : %s", texture_name->east);
+    // printf("F : %s", texture_name->floor);
+    // printf("C : %s", texture_name->ceiling);
+    printf("NO : %s\n", texture_name->north);
+    printf("SO : %s\n", texture_name->south);
+    printf("WE : %s\n", texture_name->west);
+    printf("EA : %s\n", texture_name->east);
+    printf("F : %s\n", texture_name->floor);
+    printf("C : %s\n", texture_name->ceiling);
+    print_map(make_map(map_list));
 }

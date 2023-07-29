@@ -29,6 +29,7 @@ static void get_fc_texture_name(char *line, e_floor_or_ceiling fc, t_texture_nam
     name = strdup(line);
     if(!name)
         MALLOC_ERR;
+    name = delete_line_break(name);
     if(fc == Floor)
         (*texture_name)->floor = name;
     else if(fc == Ceiling)

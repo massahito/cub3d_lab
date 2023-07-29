@@ -133,11 +133,9 @@ char *delete_line_break(char *line)
     len = strlen(line);
     if(line[len - 1] != '\n')
         return line;
-    new = (char *)malloc(sizeof(char) * len);
+    new = strndup(line, len - 1);
     if(!new)
         MALLOC_ERR;
-    strncpy(new, line, len - 1);
-    new[len - 1] = '\0';
     free(line);
     return (new);
 }

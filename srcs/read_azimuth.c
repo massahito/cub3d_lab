@@ -31,6 +31,7 @@ static void get_azimuth_texture_name(char *line, e_azimuth azimuth, t_texture_na
     while(isspace(*line))
         line++;
     texture_name = strdup(line);
+    texture_name = delete_line_break(texture_name);
     if(!texture_name)
         MALLOC_ERR;
     if(azimuth == North)

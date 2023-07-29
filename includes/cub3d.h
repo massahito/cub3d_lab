@@ -48,15 +48,11 @@ double	abs_double(double num);
 /**
  * 
 */
-// void error(char *str,char *str2,char *str3, size_t exit_status);
 int error(char *str,char *str2,char *str3, size_t exit_status);
 bool check_file_name(char *str);
 void free_azimuths(t_texture_name *texture_name);
 int read_azimuths(t_texture_name **texture_name, int fd);
-// void read_azimuths(t_texture_name **texture_name, int fd);
-// void read_fc_color(t_texture_name **texture_name, int fd);
 int read_fc_color(t_texture_name **texture_name, int fd);
-// void read_map(t_map_list **map_list, int fd);
 int read_map(t_map_list **map_list, int fd);
 void free_map_list(t_map_list *map_list);
 int map_check(t_map_list **map_list);
@@ -66,6 +62,8 @@ size_t map_list_size(t_map_list *map_list);
 t_map_list *map_last(t_map_list *map_list);
 t_map_list  *new_map_list(char *line);
 void read_cub_file(char *argv);
+char *delete_line_break(char *line);
+int apply_list(t_map_list *map_list,int (* pfunc)(char *));
 
 /**    X  */
 #define C 88
