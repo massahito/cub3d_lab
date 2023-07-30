@@ -31,7 +31,6 @@ static void get_azimuth_texture_name(char *line, e_azimuth azimuth, t_texture_na
     while(isspace(*line))
         line++;
     texture_name = strdup(line);
-    texture_name = delete_line_break(texture_name);
     if(!texture_name)
         MALLOC_ERR;
     if(azimuth == North)
@@ -59,6 +58,7 @@ int read_azimuths(t_texture_name **texture_name, int fd)
             // free_azimuths(*texture_name);
             return error("Error: ", "Invalid file: ", "No azimuths", EXIT_FAILURE);
         }
+        line = delete_line_break(line);
         azimuth = which_azimuth(line);
         if(azimuth ==  AZIMUTH_Vary)
         {
