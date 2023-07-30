@@ -95,54 +95,54 @@ int fill_in_one_line(char *line)
 }
 
 void prints(t_texture_name *texture_name,t_map_list *map_list);
-void read_cub_file(char *argv)
+void read_cub_file(char *argv,t_texture_name **texture_name, t_map_list **map_list)
 {
     int file_fd;
-    t_texture_name *texture_name;
-    t_map_list *map_list;
+    // t_texture_name *texture_name;
+    // t_map_list *map_list;
 
-    map_list = NULL;
-    texture_name = new_texture_name();
-    if(!texture_name)
+    // map_list = NULL;x
+    *texture_name = new_texture_name();
+    if(!*texture_name)
         MALLOC_ERR;
     file_fd = open(argv,O_RDONLY);
     if(file_fd == -1)
     {
         error("cub file open error", NULL, NULL,EXIT_FAILURE);
-        free_azimuths(texture_name);
+        free_azimuths(*texture_name);
         exit(EXIT_FAILURE);
     }
-    if(read_azimuths(&texture_name, file_fd))
+    if(read_azimuths(texture_name, file_fd))
     {
         close(file_fd);
-        free_azimuths(texture_name);
+        free_azimuths(*texture_name);
         exit(EXIT_FAILURE);
     }
-    if(read_fc_color(&texture_name, file_fd))
+    if(read_fc_color(texture_name, file_fd))
     {
         close(file_fd);
-        free_azimuths(texture_name);
+        free_azimuths(*texture_name);
         exit(EXIT_FAILURE);
     }
-    if(read_map(&map_list, file_fd))
+    if(read_map(map_list, file_fd))
     {
         close(file_fd);
-        free_azimuths(texture_name);
-        free_map_list(map_list);
+        free_azimuths(*texture_name);
+        free_map_list(*map_list);
         exit(EXIT_FAILURE);
     }
-    if(map_check(&map_list))
+    if(map_check(map_list))
     {
         close(file_fd);
-        free_azimuths(texture_name);
-        free_map_list(map_list);
+        free_azimuths(*texture_name);
+        free_map_list(*map_list);
         exit(EXIT_FAILURE);
     }
-    apply_list(map_list, fill_in_one_line);
-    prints(texture_name,map_list);
+    apply_list(*map_list, fill_in_one_line);
+    // prints(*texture_name,*map_list);
     close(file_fd);
-    free_azimuths(texture_name);
-    free_map_list(map_list);
+    // free_azimuths(*texture_name);
+    // free_map_list(*map_list);
 }
 
 

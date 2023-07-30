@@ -257,14 +257,14 @@ void	calc(t_vars *vars)
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
-	void	*img0;
-	void	*img1;
-	void	*img2;
-	void	*img3;
+	t_texture_name *texture_name;
+	t_map_list *map_list;
 
 	/**
 	 * 
 	*/
+	texture_name = NULL;
+	map_list = NULL;
 	if (argc != 2)
 	{
 		error("Invalid argument",NULL,NULL,EXIT_FAILURE);
@@ -275,7 +275,7 @@ int	main(int argc, char **argv)
 		error("Invalid file name: ",argv[1],NULL,EXIT_FAILURE);
 		exit(EXIT_FAILURE);
 	}
-	read_cub_file(argv[1]);
+	read_cub_file(argv[1],&texture_name,&map_list);
 	/**
 	 * 
 	*/
@@ -288,23 +288,7 @@ int	main(int argc, char **argv)
 	vars.posY = 12;
 	vars.planeX = 0;
 	vars.planeY = 0.66;
-	//iamge download
-	img0 = mlx_xpm_file_to_image(vars.mlx, "./images/komurokei.xpm",
-			&(vars.wall[0].img_width), &(vars.wall[0].img_height));
-	vars.wall[0].addr = mlx_get_data_addr(img0, &(vars.wall[0].bits_per_pixel),
-			&(vars.wall[0].size_len), &(vars.wall[0].endian));
-	img1 = mlx_xpm_file_to_image(vars.mlx, "./images/bluestone.xpm",
-			&(vars.wall[1].img_width), &(vars.wall[1].img_height));
-	vars.wall[1].addr = mlx_get_data_addr(img1, &(vars.wall[1].bits_per_pixel),
-			&(vars.wall[1].size_len), &(vars.wall[1].endian));
-	img2 = mlx_xpm_file_to_image(vars.mlx, "./images/colorstone.xpm",
-			&(vars.wall[2].img_width), &(vars.wall[2].img_height));
-	vars.wall[2].addr = mlx_get_data_addr(img2, &(vars.wall[2].bits_per_pixel),
-			&(vars.wall[2].size_len), &(vars.wall[2].endian));
-	img3 = mlx_xpm_file_to_image(vars.mlx, "./images/greystone.xpm",
-			&(vars.wall[3].img_width), &(vars.wall[3].img_height));
-	vars.wall[3].addr = mlx_get_data_addr(img3, &(vars.wall[3].bits_per_pixel),
-			&(vars.wall[3].size_len), &(vars.wall[3].endian));
+	add_vars(&vars,texture_name,map_list);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	//mlx_hook(vars.win, 17, 1L<<0, keypress, &vars);
 	calc(&vars);

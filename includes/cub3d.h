@@ -61,10 +61,13 @@ void map_free(char **map);
 size_t map_list_size(t_map_list *map_list);
 t_map_list *map_last(t_map_list *map_list);
 t_map_list  *new_map_list(char *line);
-void read_cub_file(char *argv);
+// void read_cub_file(char *argv);
+void read_cub_file(char *argv,t_texture_name **texture_name, t_map_list **map_list);
 char *delete_line_break(char *line);
 int apply_list(t_map_list *map_list,int (* pfunc)(char *));
 bool no_line(char *line);
+void add_vars(t_vars *vars,t_texture_name *texture_name, t_map_list *map_list);
+
 
 /**    X  */
 #define C 88
