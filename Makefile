@@ -1,6 +1,6 @@
 NAME		=	cub3D
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=leak
+CFLAGS		=	-Wall -Wextra -Werror #-g -fsanitize=leak
 # CFLAGS		=	-Wall -Wextra -Werror
 INCLUDE		=	-I ./minilibx-linux/ -I ./includes/
 LIBMACDIR	=	-L/usr/local/lib -L/usr/lib -L/usr/X11R6/lib
@@ -28,7 +28,7 @@ $(NAME):$(OBJS) $(MLXLIB) $(LIBFTNAME) $(GNLNAME)
 ifeq ($(shell uname -s),Linux)
 	$(CC) $(CFLAGS) $^ $(LIBLNXDIR) $(LIBLNX) $(MLXLIB) -o $(NAME)
 else
-	$(CC) $(CFLAGS) $^ $(LIBMACDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFTNAME) $(GNLNAME) $(LIBMACDIR) $(LIBMAC) $(MLXLIB) -o $(NAME)
 endif
 
 $(MLXLIB):
