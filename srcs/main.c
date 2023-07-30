@@ -270,17 +270,42 @@ void	calc(t_vars *vars)
 	return ;
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_vars	vars;
-	void	*img0;
-	void	*img1;
-	void	*img2;
-	void	*img3;
+	t_texture_name *texture_name;
+	t_map_list *map_list;
 
+	/**
+	 * 
+	*/
+	texture_name = NULL;
+	map_list = NULL;
+	if (argc != 2)
+	{
+		error("Invalid argument",NULL,NULL,EXIT_FAILURE);
+		exit(EXIT_FAILURE);
+	}
+    if(check_file_name(argv[1]))
+	{
+		error("Invalid file name: ",argv[1],NULL,EXIT_FAILURE);
+		exit(EXIT_FAILURE);
+	}
+	read_cub_file(argv[1],&texture_name,&map_list);
+	/**
+	 * 
+	*/
 	//init vars
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
+	vars.dir_x = -1;
+	vars.dir_y = 0;
+	vars.pos_x = 22;
+	vars.pos_y = 12;
+	vars.plane_x = 0;
+	vars.plane_y = 0.66;
+	add_vars(&vars,texture_name,map_list);
+/*
 	vars.dir_x = -1;
 	vars.dir_y = 0;
 	vars.pos_x = 22;
@@ -304,6 +329,7 @@ int	main(void)
 			&(vars.wall[3].img_width), &(vars.wall[3].img_height));
 	vars.wall[3].addr = mlx_get_data_addr(img3, &(vars.wall[3].bits_per_pixel),
 			&(vars.wall[3].size_len), &(vars.wall[3].endian));
+*/
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	//mlx_hook(vars.win, 17, 1L<<0, keypress, &vars);
 	calc(&vars);
