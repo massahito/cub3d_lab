@@ -10,14 +10,14 @@ static e_floor_or_ceiling which_fc(char *line)
         re = Floor;
     else if(strncmp(line,"C",1) == 0)
         re = Ceiling;
-    else if(strncmp(line, "\0",1) == 0)
+    else if(no_line(line))
         re = FC_No;
     else
         re = FC_Vary;
     return re;
 }
 
-static void get_fc_texture_name(char *line, e_floor_or_ceiling fc, t_texture_name **texture_name)
+static int get_fc_texture_name(char *line, e_floor_or_ceiling fc, t_texture_name **texture_name)
 {
     char *name;
 
@@ -29,11 +29,19 @@ static void get_fc_texture_name(char *line, e_floor_or_ceiling fc, t_texture_nam
     name = strdup(line);
     if(!name)
         MALLOC_ERR;
-    name = delete_line_break(name);
     if(fc == Floor)
+    {
+        if((*texture_name)->floor)
+            return 1;
         (*texture_name)->floor = name;
+    }
     else if(fc == Ceiling)
+    {
+        if((*texture_name)->ceiling)
+            return 1;
         (*texture_name)->ceiling = name;
+    }
+    return 0;
 }
 
 int read_fc_color(t_texture_name **texture_name, int fd)
@@ -51,6 +59,7 @@ int read_fc_color(t_texture_name **texture_name, int fd)
             // free_azimuths(*texture_name);
             return error("Error: ", "Invalid file: ", "No Floor or Celing", EXIT_FAILURE);
         }
+        line = delete_line_break(line);
         fc = which_fc(line);
         if(fc ==  FC_Vary)
         {
@@ -65,7 +74,8 @@ int read_fc_color(t_texture_name **texture_name, int fd)
         else
         {
             n += 1;
-            get_fc_texture_name(line, fc, texture_name);
+            if(get_fc_texture_name(line, fc, texture_name))
+                return error("Invalid file: ", "same floor or ceiling",NULL, EXIT_FAILURE);
         }
         free(line);
         if(n == 2)

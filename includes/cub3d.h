@@ -64,6 +64,7 @@ t_map_list  *new_map_list(char *line);
 void read_cub_file(char *argv);
 char *delete_line_break(char *line);
 int apply_list(t_map_list *map_list,int (* pfunc)(char *));
+bool no_line(char *line);
 
 /**    X  */
 #define C 88

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static bool no_line(char *line)
+bool no_line(char *line)
 {
     while(isspace(*line))
         line++;
@@ -8,6 +8,7 @@ static bool no_line(char *line)
         return true;
     return false;
 }
+
 static e_azimuth which_azimuth(char *line)
 {
     e_azimuth re;
