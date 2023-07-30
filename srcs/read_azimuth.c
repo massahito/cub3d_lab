@@ -1,5 +1,13 @@
 #include "cub3d.h"
 
+static bool no_line(char *line)
+{
+    while(isspace(*line))
+        line++;
+    if(strncmp(line, "\0",1) == 0)
+        return true;
+    return false;
+}
 static e_azimuth which_azimuth(char *line)
 {
     e_azimuth re;
@@ -14,14 +22,14 @@ static e_azimuth which_azimuth(char *line)
         re = West;
     else if(strncmp(line,"EA",2) == 0)
         re = East;
-    else if(strncmp(line, "\0",1) == 0)
+    else if(no_line(line))
         re = AZIMUTH_No;
     else
         re = AZIMUTH_Vary;
     return re;
 }
 
-static void get_azimuth_texture_name(char *line, e_azimuth azimuth, t_texture_name **azimuths)
+static int get_azimuth_texture_name(char *line, e_azimuth azimuth, t_texture_name **azimuths)
 {
     char *texture_name;
 
@@ -34,13 +42,30 @@ static void get_azimuth_texture_name(char *line, e_azimuth azimuth, t_texture_na
     if(!texture_name)
         MALLOC_ERR;
     if(azimuth == North)
+    {
+        if((*azimuths)->north)
+            return 1;
         (*azimuths)->north = texture_name;
+    }
     else if(azimuth == South)
+    {
+        if((*azimuths)->south)
+            return 1;
         (*azimuths)->south = texture_name;
+    }
     else if(azimuth == West)
+    {
+        if((*azimuths)->west)
+            return 1;
         (*azimuths)->west = texture_name;
+    }
     else if(azimuth == East)
+    {
+        if((*azimuths)->east)
+            return 1;
         (*azimuths)->east = texture_name;
+    }
+    return 0;
 }
 
 int read_azimuths(t_texture_name **texture_name, int fd)
@@ -73,7 +98,9 @@ int read_azimuths(t_texture_name **texture_name, int fd)
         else
         {
             n += 1;
-            get_azimuth_texture_name(line, azimuth, texture_name);
+            if(get_azimuth_texture_name(line, azimuth, texture_name))
+                return error("Invalid file: ", "same azimuths",NULL, EXIT_FAILURE);
+
         }
         free(line);
         if(n == 4)
