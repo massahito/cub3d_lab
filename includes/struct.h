@@ -24,7 +24,6 @@ typedef struct s_vars
 	double	planeY;
 	char 	**map;
 	t_img	wall[4];
-	t_img	sample;
 }			t_vars;
 
 typedef struct s_x
@@ -54,6 +53,7 @@ typedef struct s_data
 	int		tex_y;
 	double	tex_position;
 	double	step;
+	t_img	img;
 }			t_data;
 
 /**
