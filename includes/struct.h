@@ -16,12 +16,12 @@ typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 	char 	**map;
 	t_img	wall[4];
 }			t_vars;
