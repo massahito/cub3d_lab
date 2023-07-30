@@ -98,10 +98,8 @@ void prints(t_texture_name *texture_name,t_map_list *map_list);
 void read_cub_file(char *argv,t_texture_name **texture_name, t_map_list **map_list)
 {
     int file_fd;
-    // t_texture_name *texture_name;
-    // t_map_list *map_list;
 
-    // map_list = NULL;x
+
     *texture_name = new_texture_name();
     if(!*texture_name)
         MALLOC_ERR;
