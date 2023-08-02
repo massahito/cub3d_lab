@@ -1,7 +1,4 @@
 #include "cub3d.h"
-#define MAPWIDTH 24
-#define MAPHEIGHT 24
-#define PI 3.141592653589793
 
 int worldMap[MAPWIDTH][MAPHEIGHT]=
 {
@@ -35,8 +32,6 @@ int	keypress(int keycode, t_vars *vars)
 {
 	double	move_speed;
 	double	rot_speed;
-	double	olddir_x;
-	double	oldplane_x;
 
 	move_speed = 0.3;
 	rot_speed = 0.2;
@@ -46,74 +41,17 @@ int	keypress(int keycode, t_vars *vars)
 		exit(0);
 	}
 	else if (keycode == W_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x + vars->dir_x
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += vars->dir_x * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + vars->dir_y
-				* move_speed)] == 0)
-			vars->pos_y += vars->dir_y * move_speed;
-	}
+		move_forword(vars, move_speed);
 	else if (keycode == S_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x - vars->dir_x
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x -= vars->dir_x * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y - vars->dir_y
-				* move_speed)] == 0)
-			vars->pos_y -= vars->dir_y * move_speed;
-	}
+		move_back(vars, move_speed);
 	else if (keycode == A_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(PI / 2)
-					- vars->dir_y * sin(PI / 2))
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += (vars->dir_x * cos(PI / 2) - vars->dir_y * sin(PI
-						/ 2)) * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
-					* sin(PI / 2) + vars->dir_y * cos(PI / 2))
-				* move_speed)] == 0)
-			vars->pos_y += (vars->dir_x * sin(PI / 2) + vars->dir_y * cos(PI
-						/ 2)) * move_speed;
-	}
+		move_left(vars, move_speed);
 	else if (keycode == D_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(-PI / 2)
-					- vars->dir_y * sin(-PI / 2))
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += (vars->dir_x * cos(-PI / 2) - vars->dir_y * sin(-PI
-						/ 2)) * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
-					* sin(-PI / 2) + vars->dir_y * cos(-PI / 2))
-				* move_speed)] == 0)
-			vars->pos_y += (vars->dir_x * sin(-PI / 2) + vars->dir_y * cos(-PI
-						/ 2)) * move_speed;
-	}
+		move_right(vars, move_speed);
 	else if (keycode == R_ALW)
-	{
-		olddir_x = vars->dir_x;
-		vars->dir_x = vars->dir_x * cos(-rot_speed) - vars->dir_y
-			* sin(-rot_speed);
-		vars->dir_y = olddir_x * sin(-rot_speed) + vars->dir_y
-			* cos(-rot_speed);
-		oldplane_x = vars->plane_x;
-		vars->plane_x = vars->plane_x * cos(-rot_speed) - vars->plane_y
-			* sin(-rot_speed);
-		vars->plane_y = oldplane_x * sin(-rot_speed) + vars->plane_y
-			* cos(-rot_speed);
-	}
+		turn_right(vars, rot_speed);
 	else if (keycode == L_ALW)
-	{
-		olddir_x = vars->dir_x;
-		vars->dir_x = vars->dir_x * cos(rot_speed) - vars->dir_y
-			* sin(rot_speed);
-		vars->dir_y = olddir_x * sin(rot_speed) + vars->dir_y * cos(rot_speed);
-		oldplane_x = vars->plane_x;
-		vars->plane_x = vars->plane_x * cos(rot_speed) - vars->plane_y
-			* sin(rot_speed);
-		vars->plane_y = oldplane_x * sin(rot_speed) + vars->plane_y
-			* cos(rot_speed);
-	}
+		turn_left(vars, rot_speed);
 	calc(vars);
 	return (0);
 }
@@ -132,91 +70,6 @@ void	set_value(t_vars *vars, t_x *x, t_y *y, double camera)
 		y->dlt_dist_y = 1e30;
 	else
 		y->dlt_dist_y = abs_double(1 / y->ray_dir_y);
-}
-
-void	first_step(t_vars *vars, t_x *x, t_y *y)
-{
-	if (x->ray_dir_x < 0)
-	{
-		x->step_x = -1;
-		x->side_dist_x = (vars->pos_x - x->map_x) * x->dlt_dist_x;
-	}
-	else
-	{
-		x->step_x = 1;
-		x->side_dist_x = (x->map_x + 1.0 - vars->pos_x) * x->dlt_dist_x;
-	}
-	if (y->ray_dir_y < 0)
-	{
-		y->step_y = -1;
-		y->side_dist_y = (vars->pos_y - y->map_y) * y->dlt_dist_y;
-	}
-	else
-	{
-		y->step_y = 1;
-		y->side_dist_y = (y->map_y + 1.0 - vars->pos_y) * y->dlt_dist_y;
-	}
-}
-
-t_data	calc_dda(t_x *x, t_y *y)
-{
-	int		hit;
-	int		side;
-	t_data	data;
-
-	hit = 0;
-	while (hit == 0)
-	{
-		if (x->side_dist_x < y->side_dist_y)
-		{
-			x->side_dist_x += x->dlt_dist_x;
-			x->map_x += x->step_x;
-			side = 0;
-		}
-		else
-		{
-			y->side_dist_y += y->dlt_dist_y;
-			y->map_y += y->step_y;
-			side = 1;
-		}
-		if (worldMap[x->map_x][y->map_y] > 0)
-			hit = 1;
-	}
-	data.side = side;
-	if (side == 0)
-		data.wall_dist = (x->side_dist_x - x->dlt_dist_x);
-	else
-		data.wall_dist = (y->side_dist_y - y->dlt_dist_y);
-	data.wall_height = WIN_HEIGHT / data.wall_dist;
-	return (data);
-}
-
-void	drawing(t_vars *vars, int i, t_data data)
-{
-	int		draw_start;
-	int		draw_end;
-	double	tex_pos;
-
-	draw_start = -1 * data.wall_height / 2 + WIN_HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = data.wall_height / 2 + WIN_HEIGHT / 2;
-	if (draw_end >= WIN_HEIGHT)
-		draw_end = WIN_HEIGHT - 1;
-	tex_pos = (draw_start - WIN_HEIGHT / 2 + data.wall_dist / 2) * data.step
-		- data.img.img_height / 2;
-	for (int j = 0; j < draw_start; j++)
-		mlx_pixel_put(vars->mlx, vars->win, i, j, 0xfc5454);
-	for (int j = draw_start; j < draw_end; j++)
-	{
-		data.tex_y = (int)tex_pos & (data.img.img_height - 1);
-		tex_pos += data.step;
-		mlx_pixel_put(vars->mlx, vars->win, i, j, *(int *)(data.img.addr
-				+ data.tex_y * data.img.size_len + data.tex_x
-				* (data.img.bits_per_pixel / 8)));
-	}
-	for (int j = draw_end; j < WIN_HEIGHT; j++)
-		mlx_pixel_put(vars->mlx, vars->win, i, j, 0x707070);
 }
 
 void	set_data(t_data *data, t_vars *vars, t_x x, t_y y)
@@ -261,7 +114,7 @@ void	calc(t_vars *vars)
 	{
 		camera = 2 * i / (double)WIN_WIDTH - 1;
 		set_value(vars, &x, &y, camera);
-		first_step(vars, &x, &y);
+		calc_first_step(vars, &x, &y);
 		data = calc_dda(&x, &y);
 		set_data(&data, vars, x, y);
 		drawing(vars, i, data);
