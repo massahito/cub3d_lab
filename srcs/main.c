@@ -1,7 +1,5 @@
 #include "cub3d.h"
-#define MAPWIDTH 24
-#define MAPHEIGHT 24
-#define PI 3.141592653589793
+
 
 int worldMap[MAPWIDTH][MAPHEIGHT]=
 {
@@ -35,8 +33,6 @@ int	keypress(int keycode, t_vars *vars)
 {
 	double	move_speed;
 	double	rot_speed;
-	double	olddir_x;
-	double	oldplane_x;
 
 	move_speed = 0.3;
 	rot_speed = 0.2;
@@ -46,74 +42,17 @@ int	keypress(int keycode, t_vars *vars)
 		exit(0);
 	}
 	else if (keycode == W_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x + vars->dir_x
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += vars->dir_x * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + vars->dir_y
-				* move_speed)] == 0)
-			vars->pos_y += vars->dir_y * move_speed;
-	}
+		move_forword(vars, move_speed);
 	else if (keycode == S_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x - vars->dir_x
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x -= vars->dir_x * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y - vars->dir_y
-				* move_speed)] == 0)
-			vars->pos_y -= vars->dir_y * move_speed;
-	}
+		move_back(vars, move_speed);
 	else if (keycode == A_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(PI / 2)
-					- vars->dir_y * sin(PI / 2))
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += (vars->dir_x * cos(PI / 2) - vars->dir_y * sin(PI
-						/ 2)) * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
-					* sin(PI / 2) + vars->dir_y * cos(PI / 2))
-				* move_speed)] == 0)
-			vars->pos_y += (vars->dir_x * sin(PI / 2) + vars->dir_y * cos(PI
-						/ 2)) * move_speed;
-	}
+		move_left(vars, move_speed);
 	else if (keycode == D_KEY)
-	{
-		if (worldMap[(int)(vars->pos_x + (vars->dir_x * cos(-PI / 2)
-					- vars->dir_y * sin(-PI / 2))
-				* move_speed)][(int)vars->pos_y] == 0)
-			vars->pos_x += (vars->dir_x * cos(-PI / 2) - vars->dir_y * sin(-PI
-						/ 2)) * move_speed;
-		if (worldMap[(int)(vars->pos_x)][(int)(vars->pos_y + (vars->dir_x
-					* sin(-PI / 2) + vars->dir_y * cos(-PI / 2))
-				* move_speed)] == 0)
-			vars->pos_y += (vars->dir_x * sin(-PI / 2) + vars->dir_y * cos(-PI
-						/ 2)) * move_speed;
-	}
+		move_right(vars, move_speed);
 	else if (keycode == R_ALW)
-	{
-		olddir_x = vars->dir_x;
-		vars->dir_x = vars->dir_x * cos(-rot_speed) - vars->dir_y
-			* sin(-rot_speed);
-		vars->dir_y = olddir_x * sin(-rot_speed) + vars->dir_y
-			* cos(-rot_speed);
-		oldplane_x = vars->plane_x;
-		vars->plane_x = vars->plane_x * cos(-rot_speed) - vars->plane_y
-			* sin(-rot_speed);
-		vars->plane_y = oldplane_x * sin(-rot_speed) + vars->plane_y
-			* cos(-rot_speed);
-	}
+		turn_right(vars, rot_speed);
 	else if (keycode == L_ALW)
-	{
-		olddir_x = vars->dir_x;
-		vars->dir_x = vars->dir_x * cos(rot_speed) - vars->dir_y
-			* sin(rot_speed);
-		vars->dir_y = olddir_x * sin(rot_speed) + vars->dir_y * cos(rot_speed);
-		oldplane_x = vars->plane_x;
-		vars->plane_x = vars->plane_x * cos(rot_speed) - vars->plane_y
-			* sin(rot_speed);
-		vars->plane_y = oldplane_x * sin(rot_speed) + vars->plane_y
-			* cos(rot_speed);
-	}
+		turn_left(vars, rot_speed);
 	calc(vars);
 	return (0);
 }

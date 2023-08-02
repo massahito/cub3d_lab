@@ -11,6 +11,7 @@ int	main()
 	CU_initialize_registry();
 	testSuite = CU_add_suite("file name test", NULL, NULL);
 	CU_add_test(testSuite, "file name", test_file_name);
+	CU_add_test(testSuite, "file name", exit_test);
 
 	CU_basic_run_tests();
 	ret = CU_get_number_of_failures();

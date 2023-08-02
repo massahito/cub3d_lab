@@ -6,6 +6,7 @@ LIB			=	-L ~/.brew/Cellar/cunit/2.1-3/lib -lcunit
 SRCS		=	main.c \
 				srcs/file_name.c \
 				file_name_test.c \
+				check_texture_exist.c \
 
 OBJDIR		=	./obj
 OBJS		=	${addprefix ${OBJDIR}/, ${notdir ${SRCS:.c=.o}}}
