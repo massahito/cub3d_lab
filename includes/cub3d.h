@@ -51,6 +51,9 @@ double	abs_double(double num);
 //dda
 void	calc_first_step(t_vars *vars, t_x *x, t_y *y);
 t_data	calc_dda(t_x *x, t_y *y);
+
+//drawing
+void	drawing(t_vars *vars, int i, t_data data);
 //file_name.c
 int		is_file_name_ok(char *str);
 
