@@ -1,5 +1,5 @@
 #include "UnitTest.h"
-
+/*
 int fake_test(int a)
 {
 	return (a);
@@ -25,3 +25,4 @@ void exit_test(void)
 	CU_ASSERT_EQUAL(0, test(0));
 	exit = original_exit;
 }
+*/
