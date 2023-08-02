@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-extern int worldMap[MAPWIDTH][MAPHEIGHT];
+extern int	worldMap[MAPWIDTH][MAPHEIGHT];
 
 void	calc_first_step(t_vars *vars, t_x *x, t_y *y)
 {
@@ -28,8 +28,8 @@ void	calc_first_step(t_vars *vars, t_x *x, t_y *y)
 
 static int	calc_side(t_x *x, t_y *y)
 {
-	int		hit;
-	int		side;
+	int	hit;
+	int	side;
 
 	hit = 0;
 	side = 0;
