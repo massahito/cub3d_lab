@@ -47,6 +47,10 @@ void	turn_left(t_vars *vars, double rot_speed);
 void	turn_right(t_vars *vars, double rot_speed);
 //calc.c
 double	abs_double(double num);
+
+//dda
+void	calc_first_step(t_vars *vars, t_x *x, t_y *y);
+t_data	calc_dda(t_x *x, t_y *y);
 //file_name.c
 int		is_file_name_ok(char *str);
 

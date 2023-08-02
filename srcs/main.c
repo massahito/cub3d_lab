@@ -72,7 +72,7 @@ void	set_value(t_vars *vars, t_x *x, t_y *y, double camera)
 	else
 		y->dlt_dist_y = abs_double(1 / y->ray_dir_y);
 }
-
+/*
 void	first_step(t_vars *vars, t_x *x, t_y *y)
 {
 	if (x->ray_dir_x < 0)
@@ -129,7 +129,7 @@ t_data	calc_dda(t_x *x, t_y *y)
 	data.wall_height = WIN_HEIGHT / data.wall_dist;
 	return (data);
 }
-
+*/
 void	drawing(t_vars *vars, int i, t_data data)
 {
 	int		draw_start;
@@ -200,7 +200,7 @@ void	calc(t_vars *vars)
 	{
 		camera = 2 * i / (double)WIN_WIDTH - 1;
 		set_value(vars, &x, &y, camera);
-		first_step(vars, &x, &y);
+		calc_first_step(vars, &x, &y);
 		data = calc_dda(&x, &y);
 		set_data(&data, vars, x, y);
 		drawing(vars, i, data);
