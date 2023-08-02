@@ -4,5 +4,4 @@
 
 //test function prototypes
 void test_file_name(void);
-void exit_test(void);
 # endif
