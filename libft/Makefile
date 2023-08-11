@@ -48,7 +48,8 @@ SRCS		=	ft_atoi.c 		\
 				ft_strjoin.c 	\
 				ft_strmapi.c 	\
 				ft_strtrim.c 	\
-				ft_substr.c
+				ft_substr.c		\
+				ft_double_ptr_free.c
 
 SRCS_BONUS	=	ft_lstadd_back.c	\
 				ft_lstadd_front.c	\
