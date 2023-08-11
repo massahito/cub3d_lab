@@ -44,6 +44,38 @@ static int get_fc_texture_name(char *line, e_floor_or_ceiling fc, t_texture_name
     return 0;
 }
 
+static int check_number_comma(char *str)
+{
+    int i;
+
+    i = 0;
+    while(str[i])
+    {
+        if(!ft_isdigit(str[i]) && str[i] != ',' && !ft_isspace(str[i]))
+            return 1;
+        i++;
+    }
+    return 0;
+}
+
+static  int change_floor_or_ceiling(t_texture_name **texture_name)
+{
+    // int num[3];
+
+    if((*texture_name)->floor)
+    {
+        if(check_number_comma((*texture_name)->floor))
+            return error("Error: ", "Invalid file: ", "floor", EXIT_FAILURE);
+    }
+    if((*texture_name)->ceiling)
+    {
+        if(check_number_comma((*texture_name)->ceiling))
+            return error("Error: ", "Invalid file: ", "ceiling", EXIT_FAILURE);
+    }
+    return 0;
+}
+
+
 int read_fc_color(t_texture_name **texture_name, int fd)
 {
     char *line;
@@ -56,14 +88,12 @@ int read_fc_color(t_texture_name **texture_name, int fd)
         line = get_next_line(fd);
         if(line == NULL)
         {
-            // free_azimuths(*texture_name);
             return error("Error: ", "Invalid file: ", "No Floor or Celing", EXIT_FAILURE);
         }
         line = delete_line_break(line);
         fc = which_fc(line);
         if(fc ==  FC_Vary)
         {
-            // free_azimuths(*texture_name);
             return error("Error: ", "Invalid file: ", "Vary Floor or Celing", EXIT_FAILURE);
         }
         else if(fc == FC_No)
@@ -81,5 +111,7 @@ int read_fc_color(t_texture_name **texture_name, int fd)
         if(n == 2)
             break;
     }
-    return 0;
+    // if(change_floor_or_ceiling(texture_name))
+    //     return error("Error: ", "Invalid number: ", "change floor or ceiling", EXIT_FAILURE);
+    return change_floor_or_ceiling(texture_name);
 }
