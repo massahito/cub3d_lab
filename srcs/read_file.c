@@ -92,6 +92,42 @@ int	fill_in_one_line(char *line)
 	return (0);
 }
 
+void palyer_direction_check(t_texture_name *texture_name,t_map_list *map_list)
+{
+	int i;
+	i =0 ;
+	int k = 0;
+	char c;
+	t_map_list *tmp;
+
+	tmp= map_list;
+	(void)texture_name;
+	while(tmp)
+	{
+		while(tmp->line[i])
+		{
+			if(tmp->line[i] != '0' && tmp->line[i] != '1')
+			{
+				texture_name->pos_x = i;
+				texture_name->pos_y = k;
+				c = tmp->line[i];
+			}
+			i++;
+		}
+		k++;
+		tmp = tmp->next;
+		i = 0;
+	}
+	if(c == 'N')
+		texture_name->direction = North;
+	if(c == 'S')
+		texture_name->direction = South;
+	if(c == 'W')
+		texture_name->direction = West;
+	if(c == 'E')
+		texture_name->direction = East;
+}
+
 void	prints(t_texture_name *texture_name,
 			t_map_list *map_list);
 void	read_cub_file(char *argv, t_texture_name **texture_name,
@@ -136,6 +172,7 @@ void	read_cub_file(char *argv, t_texture_name **texture_name,
 		exit(EXIT_FAILURE);
 	}
 	apply_list(*map_list, fill_in_one_line);
+	palyer_direction_check(*texture_name,*map_list);
 	// prints(*texture_name,*map_list);
 	close(file_fd);
 	// free_azimuths(*texture_name);

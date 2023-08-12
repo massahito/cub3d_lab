@@ -81,6 +81,10 @@ typedef struct s_texture_name
 	char					*ceiling;
 	int						c;
 	int						f;
+	double					pos_x;
+	double					pos_y;
+	e_azimuth					direction;
+
 }							t_texture_name;
 
 typedef enum floor_or_ceiling

@@ -44,6 +44,40 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 		error("Error: ", "Invalid addr: ", "wall addr", EXIT_FAILURE);
 		exit(1);
 	}
+	if (texture_name->direction == North)
+	{
+		vars->dir_x = 0;
+		vars->dir_y = 1;
+		vars->plane_x = 0.66;
+		vars->plane_y = 0;
+	}
+	if (texture_name->direction == South)
+	{
+		vars->dir_x = 0;
+		vars->dir_y = -1;
+		vars->plane_x = 0.66;
+		vars->plane_y = 0;
+	}
+	if (texture_name->direction == West)
+	{
+		vars->dir_x = -1;
+		vars->dir_y = 0;
+		vars->plane_x = 0;
+		vars->plane_y = 0.66;
+		
+	}
+	if (texture_name->direction == East)
+	{
+		vars->dir_x = 1;
+		vars->dir_y = 0;
+				vars->plane_x = 0;
+		vars->plane_y = 0.66;
+	}
 	vars->floor = texture_name->f;
 	vars->ceiling = texture_name->c;
+	vars->pos_x = texture_name->pos_x;
+	vars->pos_y = texture_name->pos_y;
+	// printf("%f\n",vars->pos_x);
+	// printf("%f\n",vars->pos_y);
+	// printf("%c\n",vars->map[(int)vars->pos_y][(int)vars->pos_x]);
 }
