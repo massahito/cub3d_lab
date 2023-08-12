@@ -151,12 +151,12 @@ int	main(int argc, char **argv)
 	//init vars
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
-	vars.dir_x = -1;
-	vars.dir_y = 0;
-	vars.pos_x = 22;
-	vars.pos_y = 12;
-	vars.plane_x = 0;
-	vars.plane_y = 0.66;
+	// vars.pos_x = 22;
+	// vars.pos_y = 12;
+	// vars.plane_x = 0.66;
+	// vars.plane_y = 0;
+	//vars.dir_x = -1;
+	//vars.dir_y = 0; 
 	add_vars(&vars,texture_name,map_list);
 /*
 	vars.dir_x = -1;
