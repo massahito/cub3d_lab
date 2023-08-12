@@ -104,11 +104,22 @@ static int	check_rgb(char *str)
 	ft_double_ptr_free(arr);
 	return (0);
 }
+static int change_rgb(int *n)
+{
+	int num;
 
-static void	add_rgb(int *n, char *str)
+	num = 0;
+	num += (n[0] << 16);
+	num += (n[1] << 8);
+	num += (n[2]);
+	return (num);
+}
+
+static void	add_rgb(int *num, char *str)
 {
 	char	**arr;
 	int		i;
+	int 	n[3];
 
 	i = 0;
 	arr = ft_split(str, ',');
@@ -120,6 +131,7 @@ static void	add_rgb(int *n, char *str)
 		i++;
 	}
 	ft_double_ptr_free(arr);
+	*num = change_rgb(n);
 }
 
 static int	change_floor_or_ceiling(t_texture_name **texture_name)
@@ -130,7 +142,7 @@ static int	change_floor_or_ceiling(t_texture_name **texture_name)
 			return (error("Error: ", "Invalid chara: ", "floor", EXIT_FAILURE));
 		if (check_rgb((*texture_name)->floor))
 			return (error("Error: ", "Invalid chara: ", "floor", EXIT_FAILURE));
-		add_rgb(&(*texture_name)->f[0], (*texture_name)->floor);
+		add_rgb(&(*texture_name)->f, (*texture_name)->floor);
 	}
 	if ((*texture_name)->ceiling)
 	{
@@ -140,7 +152,7 @@ static int	change_floor_or_ceiling(t_texture_name **texture_name)
 		if (check_rgb((*texture_name)->floor))
 			return (error("Error: ", "Invalid chara: ", "ceiling",
 					EXIT_FAILURE));
-		add_rgb(&(*texture_name)->c[0], (*texture_name)->ceiling);
+		add_rgb(&(*texture_name)->c, (*texture_name)->ceiling);
 	}
 	return (0);
 }

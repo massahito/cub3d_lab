@@ -23,6 +23,8 @@ typedef struct s_vars
 	double					plane_x;
 	double					plane_y;
 	char					**map;
+	int						floor;	
+	int						ceiling;
 	t_img					wall[4];
 }							t_vars;
 
@@ -77,8 +79,8 @@ typedef struct s_texture_name
 	char					*east;
 	char					*floor;
 	char					*ceiling;
-	int						f[3];
-	int						c[3];
+	int						c;
+	int						f;
 }							t_texture_name;
 
 typedef enum floor_or_ceiling

@@ -13,7 +13,7 @@ void	draw_ceiling(t_vars *vars, int line, t_data data)
 		draw_start = 0;
 	while (j < draw_start)
 	{
-		mlx_pixel_put(vars->mlx, vars->win, line, j, 0xfc5454);
+		mlx_pixel_put(vars->mlx, vars->win, line, j, vars->ceiling);
 		j++;
 	}
 }
@@ -56,7 +56,7 @@ void	draw_floor(t_vars *vars, int line, t_data data)
 	j = draw_end;
 	while (j < WIN_HEIGHT)
 	{
-		mlx_pixel_put(vars->mlx, vars->win, line, j, 0x707070);
+		mlx_pixel_put(vars->mlx, vars->win, line, j, vars->floor);
 		j++;
 	}
 }

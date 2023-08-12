@@ -44,4 +44,6 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 		error("Error: ", "Invalid addr: ", "wall addr", EXIT_FAILURE);
 		exit(1);
 	}
+	vars->floor = texture_name->f;
+	vars->ceiling = texture_name->c;
 }
