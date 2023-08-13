@@ -25,6 +25,7 @@ typedef struct s_vars
 	char					**map;
 	int						floor;	
 	int						ceiling;
+	int						default_dir;
 	t_img					wall[4];
 }							t_vars;
 

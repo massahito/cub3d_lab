@@ -46,6 +46,7 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	}
 	if (texture_name->direction == North)
 	{
+		vars->default_dir = North;
 		vars->dir_x = -1;
 		vars->dir_y = 0;
 		vars->plane_x = 0;
@@ -53,6 +54,7 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	}
 	if (texture_name->direction == South)
 	{
+		vars->default_dir = South;
 		vars->dir_x = 1;
 		vars->dir_y = 0;
 		vars->plane_x = 0;
@@ -60,6 +62,7 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	}
 	if (texture_name->direction == West)
 	{
+		vars->default_dir = West;
 		vars->dir_x = 0;
 		vars->dir_y = -1;
 		vars->plane_x = 0.66;
@@ -68,6 +71,7 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	}
 	if (texture_name->direction == East)
 	{
+		vars->default_dir = East;
 		vars->dir_x = 0;
 		vars->dir_y = 1;
 		vars->plane_x = 0.66;
