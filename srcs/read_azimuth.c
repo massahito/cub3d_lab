@@ -1,14 +1,5 @@
 #include "cub3d.h"
 
-bool	no_line(char *line)
-{
-	while (isspace(*line))
-		line++;
-	if (strncmp(line, "\0", 1) == 0)
-		return (true);
-	return (false);
-}
-
 static e_azimuth	which_azimuth(char *line)
 {
 	e_azimuth	re;
@@ -30,19 +21,10 @@ static e_azimuth	which_azimuth(char *line)
 	return (re);
 }
 
-static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
-		t_texture_name **azimuths)
+static int	get_azimuth_texture_name_utils(char *texture_name,
+											e_azimuth azimuth,
+											t_texture_name **azimuths)
 {
-	char	*texture_name;
-
-	while (isspace(*line))
-		line++;
-	line += 2;
-	while (isspace(*line))
-		line++;
-	texture_name = strdup(line);
-	if (!texture_name)
-		MALLOC_ERR;
 	if (azimuth == North)
 	{
 		if ((*azimuths)->north)
@@ -70,45 +52,55 @@ static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
 	return (0);
 }
 
+static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
+		t_texture_name **azimuths)
+{
+	char	*texture_name;
+
+	while (isspace(*line))
+		line++;
+	line += 2;
+	while (isspace(*line))
+		line++;
+	texture_name = strdup(line);
+	if (!texture_name)
+		malloc_err();
+	return (get_azimuth_texture_name_utils(texture_name, azimuth, azimuths));
+}
+
+static int	read_azimuths_utils(char *line, t_texture_name **texture_name,
+		int *n, e_azimuth azimuth)
+{
+	if (azimuth == AZIMUTH_No)
+	{
+		free(line);
+		return (0);
+	}
+	*n += 1;
+	if (get_azimuth_texture_name(line, azimuth, texture_name))
+		return (error("Invalid file: ", "same azimuths", NULL));
+	free(line);
+	return (0);
+}
+
 int	read_azimuths(t_texture_name **texture_name, int fd)
 {
-	e_azimuth azimuth;
-	char *line;
-	int n;
+	e_azimuth	azimuth;
+	char		*line;
+	int			n;
 
 	n = 0;
-	while (1)
+	while (n < 4)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-		{
-			// free_azimuths(*texture_name);
-			return (error("Error: ", "Invalid file: ", "No azimuths",
-					EXIT_FAILURE));
-		}
+			return (error("Error: ", "Invalid file: ", "No azimuths"));
 		line = delete_line_break(line);
 		azimuth = which_azimuth(line);
 		if (azimuth == AZIMUTH_Vary)
-		{
-			// free_azimuths(*texture_name);
-			return (error("Error: ", "Invalid file: ", "Vary azimuths",
-					EXIT_FAILURE));
-		}
-		else if (azimuth == AZIMUTH_No)
-		{
-			free(line);
-			continue ;
-		}
-		else
-		{
-			n += 1;
-			if (get_azimuth_texture_name(line, azimuth, texture_name))
-				return (error("Invalid file: ", "same azimuths", NULL,
-						EXIT_FAILURE));
-		}
-		free(line);
-		if (n == 4)
-			break ;
+			return (error("Error: ", "Invalid file: ", "Vary azimuths"));
+		if (read_azimuths_utils(line, texture_name, &n, azimuth))
+			return (1);
 	}
 	return (0);
 }
