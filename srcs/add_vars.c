@@ -75,8 +75,8 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	}
 	vars->floor = texture_name->f;
 	vars->ceiling = texture_name->c;
-	vars->pos_x = texture_name->pos_x;
-	vars->pos_y = texture_name->pos_y;
+	vars->pos_x = texture_name->pos_y;
+	vars->pos_y = texture_name->pos_x;
 	// printf("%f\n",vars->pos_x);
 	// printf("%f\n",vars->pos_y);
 	// printf("%c\n",vars->map[(int)vars->pos_y][(int)vars->pos_x]);

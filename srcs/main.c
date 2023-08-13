@@ -161,8 +161,8 @@ int	main(int argc, char **argv)
 /*
 	vars.dir_x = -1;
 	vars.dir_y = 0;
-	vars.pos_x = 22;
-	vars.pos_y = 12;
+	vars.pos_x = 6;
+	vars.pos_y = 8;
 	vars.plane_x = 0;
 	vars.plane_y = 0.66;
 	//iamge download
