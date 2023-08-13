@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-extern int	worldMap[MAPWIDTH][MAPHEIGHT];
+//extern int	worldMap[MAPWIDTH][MAPHEIGHT];
 
 void	calc_first_step(t_vars *vars, t_x *x, t_y *y)
 {
@@ -26,7 +26,7 @@ void	calc_first_step(t_vars *vars, t_x *x, t_y *y)
 	}
 }
 
-static int	calc_side(t_x *x, t_y *y)
+static int	calc_side(t_vars *vars, t_x *x, t_y *y)
 {
 	int	hit;
 	int	side;
@@ -47,17 +47,17 @@ static int	calc_side(t_x *x, t_y *y)
 			y->map_y += y->step_y;
 			side = 1;
 		}
-		if (worldMap[x->map_x][y->map_y] > 0)
+		if (vars->map[x->map_x][y->map_y] != '0')
 			hit = 1;
 	}
 	return (side);
 }
 
-t_data	calc_dda(t_x *x, t_y *y)
+t_data	calc_dda(t_vars *vars, t_x *x, t_y *y)
 {
 	t_data	data;
 
-	data.side = calc_side(x, y);
+	data.side = calc_side(vars, x, y);
 	if (data.side == 0)
 		data.wall_dist = (x->side_dist_x - x->dlt_dist_x);
 	else

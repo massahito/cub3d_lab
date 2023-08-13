@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-extern int	worldMap[MAPWIDTH][MAPHEIGHT];
+//extern int	worldMap[MAPWIDTH][MAPHEIGHT];
 
 void	turn_right(t_vars *vars, double rot_speed)
 {

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-extern int	worldMap[MAPWIDTH][MAPHEIGHT];
+//extern int	worldMap[MAPWIDTH][MAPHEIGHT];
 
 void	draw_ceiling(t_vars *vars, int line, t_data data)
 {
