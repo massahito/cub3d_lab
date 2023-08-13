@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-//extern int	worldMap[MAPWIDTH][MAPHEIGHT];
-
 void	calc_first_step(t_vars *vars, t_x *x, t_y *y)
 {
 	if (x->ray_dir_x < 0)

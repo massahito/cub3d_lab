@@ -2,8 +2,6 @@
 void	turn_abs_right(t_vars *vars, double rot_speed);
 void	turn_abs_left(t_vars *vars, double rot_speed);
 
-//extern int	worldMap[MAPWIDTH][MAPHEIGHT];
-
 void	turn_right(t_vars *vars, double rot_speed)
 {
 	if(vars->default_dir == North || vars->default_dir == East)

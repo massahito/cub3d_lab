@@ -2,8 +2,6 @@
 static void	move_abs_left(t_vars *vars, double move_speed);
 static void	move_abs_right(t_vars *vars, double move_speed);
 
-//extern int	worldMap[MAPWIDTH][MAPHEIGHT];
-
 void	move_forword(t_vars *vars, double move_speed)
 {
 	if (vars->map[(int)(vars->pos_x + vars->dir_x
