@@ -68,7 +68,7 @@ int	dfs(char **map)
 	if (flag == true)
 	{
 		map_free(map);
-		error("Error: ", "No walls around", NULL, 2);
+		error("Error: ", "No walls around", NULL);
 		return (1);
 	}
 	map_free(map);
@@ -86,7 +86,7 @@ int	map_check(t_map_list **map_list)
 	apply_list2(*map_list, &player_count, whether_player_is_right_or_not);
 	if (player_count != 1)
 	{
-		error("Error: ", "player count is not 1", NULL, 2);
+		error("Error: ", "player count is not 1", NULL);
 		return (1);
 	}
 	make_x_map(*map_list);

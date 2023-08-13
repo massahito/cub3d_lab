@@ -24,9 +24,6 @@
 // # define R_ALW	65363
 // # define L_ALW	65361
 
-# define EIXT_SUCCESS 0
-# define EXIT_FAILURE 1
-
 //mac keycode
 # define ESC 53
 # define W_KEY 13
@@ -68,7 +65,8 @@ int			is_file_name_ok(char *str);
 /**
  * 
 */
-int			error(char *str, char *str2, char *str3, size_t exit_status);
+// int			error(char *str, char *str2, char *str3, size_t exit_status);
+int	error(char *str, char *str2, char *str3);
 bool		check_file_name(char *str);
 void		free_azimuths(t_texture_name *texture_name);
 int			read_azimuths(t_texture_name **texture_name, int fd);
@@ -101,8 +99,28 @@ int	apply_list2(t_map_list *map_list, size_t *count, int (*pfunc)(char *,
 			size_t *));
 int	whether_player_is_right_or_not(char *line, size_t *player_count);
 int	whether_possible_characters(char *line);
-
+void	read_err(char *meessage, int fd,t_texture_name **texture_name);
+int	fill_in_one_line(char *line);
+void	free_azimuths(t_texture_name *texture_name);
+t_texture_name	*new_texture_name(void);
+int	check_number_comma(char *str);
 void malloc_err(void);
+int	check_number_space(char *str);
+int	check_rgb(char *str);
+void	add_rgb(int *num, char *str);
+int	change_rgb(int *n);
+// t_map_list	*map_last(t_map_list *map_list);
+// t_map_list	*new_map_list(char *line);
+// void	add_map_list(t_map_list **map_list, char *line);
+// size_t	map_list_size(t_map_list *map_list);
+// void	free_map_clear(t_map_list *map_list);
+size_t	map_list_size(t_map_list *map_list);
+void	add_map_list(t_map_list **map_list, char *line);
+t_map_list	*new_map_list(char *line);
+t_map_list	*map_last(t_map_list *map_list);
+void	free_map_clear(t_map_list *map_list);
+void	free_map_list(t_map_list *map_list);
+
 /**    X  */
 # define C 88
 /**    1  */

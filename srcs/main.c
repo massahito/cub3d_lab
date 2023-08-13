@@ -136,12 +136,12 @@ int	main(int argc, char **argv)
 	map_list = NULL;
 	if (argc != 2)
 	{
-		error("Invalid argument",NULL,NULL,EXIT_FAILURE);
+		error("Invalid argument",NULL,NULL);
 		exit(EXIT_FAILURE);
 	}
     if(check_file_name(argv[1]))
 	{
-		error("Invalid file name: ",argv[1],NULL,EXIT_FAILURE);
+		error("Invalid file name: ",argv[1],NULL);
 		exit(EXIT_FAILURE);
 	}
 	read_cub_file(argv[1],&texture_name,&map_list);
@@ -158,6 +158,7 @@ int	main(int argc, char **argv)
 	//vars.dir_x = -1;
 	//vars.dir_y = 0; 
 	add_vars(&vars,texture_name,map_list);
+
 /*
 	vars.dir_x = -1;
 	vars.dir_y = 0;

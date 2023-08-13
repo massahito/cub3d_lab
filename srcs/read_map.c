@@ -1,97 +1,5 @@
 #include "cub3d.h"
 
-t_map_list	*map_last(t_map_list *map_list)
-{
-	t_map_list	*tmp;
-
-	tmp = map_list;
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-t_map_list	*new_map_list(char *line)
-{
-	t_map_list	*new;
-
-	new = (t_map_list *)malloc(sizeof(t_map_list));
-	if (!new)
-		malloc_err();
-	new->line = line;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
-void	add_map_list(t_map_list **map_list, char *line)
-{
-	t_map_list	*new;
-	t_map_list	*tmp;
-
-	new = new_map_list(line);
-	if (*map_list == NULL)
-	{
-		*map_list = new;
-		return ;
-	}
-	tmp = map_last(*map_list);
-	tmp->next = new;
-	new->prev = tmp;
-}
-
-size_t	map_list_size(t_map_list *map_list)
-{
-	size_t		size;
-	t_map_list	*tmp;
-
-	size = 0;
-	tmp = map_list;
-	while (tmp)
-	{
-		size++;
-		tmp = tmp->next;
-	}
-	return (size);
-}
-
-void	print_list(t_map_list *map_list)
-{
-	t_map_list	*tmp;
-
-	tmp = map_list;
-	printf("start\n");
-	while (tmp)
-	{
-		printf("%s\n", tmp->line);
-		tmp = tmp->next;
-	}
-	printf("end\n");
-}
-
-void	free_map_clear(t_map_list *map_list)
-{
-	if (map_list)
-	{
-		if (map_list->line)
-			free(map_list->line);
-		map_list->next = NULL;
-		map_list->prev = NULL;
-		free(map_list);
-	}
-}
-
-void	free_map_list(t_map_list *map_list)
-{
-	t_map_list	*tmp;
-
-	while (map_list)
-	{
-		tmp = map_list->next;
-		free_map_clear(map_list);
-		map_list = tmp;
-	}
-}
-
 bool	is_no_str(char *line)
 {
 	while (isspace(*line))
@@ -138,17 +46,13 @@ char	*delete_line_break(char *line)
 	return (new);
 }
 
-int	read_map(t_map_list **map_list, int fd)
+static char	*read_map_utils(int fd, char *line)
 {
-	char *line;
-
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-		{
-			return (error("Map not found", NULL, NULL, 2));
-		}
+			return (NULL);
 		else if (strcmp(line, "") == 0 || strcmp(line, "\n") == 0)
 		{
 			free(line);
@@ -157,6 +61,16 @@ int	read_map(t_map_list **map_list, int fd)
 		else
 			break ;
 	}
+	return (line);
+}
+
+int	read_map(t_map_list **map_list, int fd)
+{
+	char	*line;
+
+	line = read_map_utils(fd, NULL);
+	if (line == NULL)
+		return (error("Map not found", NULL, NULL));
 	add_map_list(map_list, delete_line_break(line));
 	while (1)
 	{

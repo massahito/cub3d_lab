@@ -10,7 +10,7 @@ int	whether_possible_characters(char *line)
 		if (line[i] != ' ' && line[i] != '0' && line[i] != '1' && line[i] != 'N'
 			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W')
 		{
-			error("Error", "Invalid character: ", &line[i], EXIT_FAILURE);
+			error("Error", "Invalid character: ", &line[i]);
 			return (1);
 		}
 		i++;
