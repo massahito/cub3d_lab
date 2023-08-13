@@ -56,13 +56,13 @@ static void	add_direction_utils(t_vars *vars, double x, double y, bool flag)
 	vars->dir_y = y;
 	if (flag)
 	{
-		vars->plane_x = 0;
-		vars->plane_y = 0.66;
+		vars->plane_x = 0.66;
+		vars->plane_y = 0;
 	}
 	else
 	{
-		vars->plane_x = 0.66;
-		vars->plane_y = 0;
+		vars->plane_x = 0;
+		vars->plane_y = 0.66;
 	}
 }
 
