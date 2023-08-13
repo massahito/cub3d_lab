@@ -16,7 +16,7 @@ t_map_list	*new_map_list(char *line)
 
 	new = (t_map_list *)malloc(sizeof(t_map_list));
 	if (!new)
-		MALLOC_ERR;
+		malloc_err();
 	new->line = line;
 	new->next = NULL;
 	new->prev = NULL;
@@ -133,7 +133,7 @@ char	*delete_line_break(char *line)
 		return (line);
 	new = strndup(line, len - 1);
 	if (!new)
-		MALLOC_ERR;
+		malloc_err();
 	free(line);
 	return (new);
 }

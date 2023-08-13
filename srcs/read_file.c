@@ -6,7 +6,7 @@ static t_texture_name	*new_texture_name(void)
 
 	texture_name = malloc(sizeof(t_texture_name));
 	if (!texture_name)
-		MALLOC_ERR;
+		malloc_err();
 	texture_name->north = NULL;
 	texture_name->south = NULL;
 	texture_name->west = NULL;
@@ -61,7 +61,7 @@ char	**make_map(t_map_list *map_list)
 	tmp = map_list;
 	map = (char **)malloc(sizeof(char *) * (map_list_size(map_list) + 1));
 	if (!map)
-		MALLOC_ERR;
+		malloc_err();
 	i = 0;
 	while (tmp)
 	{
@@ -69,7 +69,7 @@ char	**make_map(t_map_list *map_list)
 		if (map[i] == NULL)
 		{
 			map_free(map);
-			MALLOC_ERR;
+			malloc_err();
 		}
 		tmp = tmp->next;
 		i++;
@@ -92,21 +92,23 @@ int	fill_in_one_line(char *line)
 	return (0);
 }
 
-void palyer_direction_check(t_texture_name *texture_name,t_map_list *map_list)
+void	palyer_direction_check(t_texture_name *texture_name,
+		t_map_list *map_list)
 {
-	int i;
-	i =0 ;
-	int k = 0;
-	char c;
-	t_map_list *tmp;
+	int			i;
+	int			k;
+	char		c;
+	t_map_list	*tmp;
 
-	tmp= map_list;
+	i = 0;
+	k = 0;
+	tmp = map_list;
 	(void)texture_name;
-	while(tmp)
+	while (tmp)
 	{
-		while(tmp->line[i])
+		while (tmp->line[i])
 		{
-			if(tmp->line[i] != '0' && tmp->line[i] != '1')
+			if (tmp->line[i] != '0' && tmp->line[i] != '1')
 			{
 				texture_name->pos_x = i;
 				texture_name->pos_y = k;
@@ -118,18 +120,18 @@ void palyer_direction_check(t_texture_name *texture_name,t_map_list *map_list)
 		tmp = tmp->next;
 		i = 0;
 	}
-	if(c == 'N')
+	if (c == 'N')
 		texture_name->direction = North;
-	if(c == 'S')
+	if (c == 'S')
 		texture_name->direction = South;
-	if(c == 'W')
+	if (c == 'W')
 		texture_name->direction = West;
-	if(c == 'E')
+	if (c == 'E')
 		texture_name->direction = East;
 }
 
-void	prints(t_texture_name *texture_name,
-			t_map_list *map_list);
+void					prints(t_texture_name *texture_name,
+							t_map_list *map_list);
 void	read_cub_file(char *argv, t_texture_name **texture_name,
 		t_map_list **map_list)
 {
@@ -137,7 +139,7 @@ void	read_cub_file(char *argv, t_texture_name **texture_name,
 
 	*texture_name = new_texture_name();
 	if (!*texture_name)
-		MALLOC_ERR;
+		malloc_err();
 	file_fd = open(argv, O_RDONLY);
 	if (file_fd == -1)
 	{
@@ -172,7 +174,7 @@ void	read_cub_file(char *argv, t_texture_name **texture_name,
 		exit(EXIT_FAILURE);
 	}
 	apply_list(*map_list, fill_in_one_line);
-	palyer_direction_check(*texture_name,*map_list);
+	palyer_direction_check(*texture_name, *map_list);
 	// prints(*texture_name,*map_list);
 	close(file_fd);
 	// free_azimuths(*texture_name);
@@ -181,7 +183,7 @@ void	read_cub_file(char *argv, t_texture_name **texture_name,
 
 /**
  * どこに何が入ってるかチェックするための関数
-*/
+ */
 void	print_map(char **map)
 {
 	int	i;

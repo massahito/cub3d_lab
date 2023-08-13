@@ -29,7 +29,7 @@ static int	get_fc_texture_name(char *line, e_floor_or_ceiling fc,
 		line++;
 	name = strdup(line);
 	if (!name)
-		MALLOC_ERR;
+		malloc_err();
 	if (fc == Floor)
 	{
 		if ((*texture_name)->floor)
@@ -80,7 +80,7 @@ static int	check_rgb(char *str)
 	i = 0;
 	arr = ft_split(str, ',');
 	if (!arr)
-		MALLOC_ERR;
+		malloc_err();
 	while (arr[i])
 	{
 		if (check_number_space(arr[i]))
@@ -104,9 +104,9 @@ static int	check_rgb(char *str)
 	ft_double_ptr_free(arr);
 	return (0);
 }
-static int change_rgb(int *n)
+static int	change_rgb(int *n)
 {
-	int num;
+	int	num;
 
 	num = 0;
 	num += (n[0] << 16);
@@ -119,12 +119,12 @@ static void	add_rgb(int *num, char *str)
 {
 	char	**arr;
 	int		i;
-	int 	n[3];
+	int		n[3];
 
 	i = 0;
 	arr = ft_split(str, ',');
 	if (!arr)
-		MALLOC_ERR;
+		malloc_err();
 	while (arr[i])
 	{
 		n[i] = ft_atoi(arr[i]);

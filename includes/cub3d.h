@@ -89,11 +89,24 @@ int			apply_list(t_map_list *map_list, int (*pfunc)(char *));
 bool		no_line(char *line);
 void		add_vars(t_vars *vars, t_texture_name *texture_name,
 				t_map_list *map_list);
+/*map_check2**/
+void	move_line(char *line, char *newline);
+void	remake_line(t_map_list *map_list, size_t max_size);
+void	make_x_map(t_map_list *map_list);
+char	*make_x_line(char *line, size_t size, char c);
+void	surround(t_map_list **map_list);
+/**map_check3*/
+size_t	max_line_size(t_map_list *map_list);
+int	apply_list2(t_map_list *map_list, size_t *count, int (*pfunc)(char *,
+			size_t *));
+int	whether_player_is_right_or_not(char *line, size_t *player_count);
+int	whether_possible_characters(char *line);
 
+void malloc_err(void);
 /**    X  */
 # define C 88
 /**    1  */
 // #define C 49
-# define MALLOC_ERR error("malloc error", NULL, NULL, EXIT_FAILURE)
+// # define MALLOC_ERR error("malloc error", NULL, NULL, EXIT_FAILURE)
 
 #endif

@@ -30,19 +30,9 @@ static e_azimuth	which_azimuth(char *line)
 	return (re);
 }
 
-static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
-		t_texture_name **azimuths)
+static int	get_azimuth_texture_name_utils(char *texture_name,
+		e_azimuth azimuth, t_texture_name **azimuths)
 {
-	char	*texture_name;
-
-	while (isspace(*line))
-		line++;
-	line += 2;
-	while (isspace(*line))
-		line++;
-	texture_name = strdup(line);
-	if (!texture_name)
-		MALLOC_ERR;
 	if (azimuth == North)
 	{
 		if ((*azimuths)->north)
@@ -70,6 +60,22 @@ static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
 	return (0);
 }
 
+static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
+		t_texture_name **azimuths)
+{
+	char	*texture_name;
+
+	while (isspace(*line))
+		line++;
+	line += 2;
+	while (isspace(*line))
+		line++;
+	texture_name = strdup(line);
+	if (!texture_name)
+		malloc_err();
+	return (get_azimuth_texture_name_utils(texture_name, azimuth, azimuths));
+}
+
 int	read_azimuths(t_texture_name **texture_name, int fd)
 {
 	e_azimuth azimuth;
@@ -81,19 +87,13 @@ int	read_azimuths(t_texture_name **texture_name, int fd)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-		{
-			// free_azimuths(*texture_name);
 			return (error("Error: ", "Invalid file: ", "No azimuths",
 					EXIT_FAILURE));
-		}
 		line = delete_line_break(line);
 		azimuth = which_azimuth(line);
 		if (azimuth == AZIMUTH_Vary)
-		{
-			// free_azimuths(*texture_name);
 			return (error("Error: ", "Invalid file: ", "Vary azimuths",
 					EXIT_FAILURE));
-		}
 		else if (azimuth == AZIMUTH_No)
 		{
 			free(line);
