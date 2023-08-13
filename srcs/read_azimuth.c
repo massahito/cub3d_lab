@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-static e_azimuth	which_azimuth(char *line)
+static t_azimuth	which_azimuth(char *line)
 {
-	e_azimuth	re;
+	t_azimuth	re;
 
 	while (isspace(*line))
 		line++;
@@ -22,7 +22,7 @@ static e_azimuth	which_azimuth(char *line)
 }
 
 static int	get_azimuth_texture_name_utils(char *texture_name,
-											e_azimuth azimuth,
+											t_azimuth azimuth,
 											t_texture_name **azimuths)
 {
 	if (azimuth == North)
@@ -52,7 +52,7 @@ static int	get_azimuth_texture_name_utils(char *texture_name,
 	return (0);
 }
 
-static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
+static int	get_azimuth_texture_name(char *line, t_azimuth azimuth,
 		t_texture_name **azimuths)
 {
 	char	*texture_name;
@@ -69,7 +69,7 @@ static int	get_azimuth_texture_name(char *line, e_azimuth azimuth,
 }
 
 static int	read_azimuths_utils(char *line, t_texture_name **texture_name,
-		int *n, e_azimuth azimuth)
+		int *n, t_azimuth azimuth)
 {
 	if (azimuth == AZIMUTH_No)
 	{
@@ -85,7 +85,7 @@ static int	read_azimuths_utils(char *line, t_texture_name **texture_name,
 
 int	read_azimuths(t_texture_name **texture_name, int fd)
 {
-	e_azimuth	azimuth;
+	t_azimuth	azimuth;
 	char		*line;
 	int			n;
 

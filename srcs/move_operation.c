@@ -1,4 +1,5 @@
 #include "cub3d.h"
+
 static void	move_abs_left(t_vars *vars, double move_speed);
 static void	move_abs_right(t_vars *vars, double move_speed);
 
@@ -24,19 +25,19 @@ void	move_back(t_vars *vars, double move_speed)
 
 void	move_left(t_vars *vars, double move_speed)
 {
-	if(vars->default_dir == North || vars->default_dir == East)
+	if (vars->default_dir == North || vars->default_dir == East)
 		move_abs_left(vars, move_speed);
 	else
 		move_abs_right(vars, move_speed);
-}	
+}
 
 void	move_right(t_vars *vars, double move_speed)
 {
-	if(vars->default_dir == North || vars->default_dir == East)
+	if (vars->default_dir == North || vars->default_dir == East)
 		move_abs_right(vars, move_speed);
 	else
 		move_abs_left(vars, move_speed);
-}	
+}
 
 static void	move_abs_left(t_vars *vars, double move_speed)
 {

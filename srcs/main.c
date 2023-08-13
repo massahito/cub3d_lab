@@ -97,26 +97,26 @@ void	calc(t_vars *vars)
 
 int	main(int argc, char **argv)
 {
-	t_vars	vars;
-	t_texture_name *texture_name;
-	t_map_list *map_list;
+	t_vars			vars;
+	t_texture_name	*texture_name;
+	t_map_list		*map_list;
 
 	texture_name = NULL;
 	map_list = NULL;
 	if (argc != 2)
 	{
-		error("Invalid argument",NULL,NULL);
+		error("Invalid argument", NULL, NULL);
 		exit(EXIT_FAILURE);
 	}
-    if(check_file_name(argv[1]))
+	if (check_file_name(argv[1]))
 	{
-		error("Invalid file name: ",argv[1],NULL);
+		error("Invalid file name: ", argv[1], NULL);
 		exit(EXIT_FAILURE);
 	}
-	read_cub_file(argv[1],&texture_name,&map_list);
+	read_cub_file(argv[1], &texture_name, &map_list);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
-	add_vars(&vars,texture_name,map_list);
+	add_vars(&vars, texture_name, map_list);
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	calc(&vars);
 	mlx_loop(vars.mlx);

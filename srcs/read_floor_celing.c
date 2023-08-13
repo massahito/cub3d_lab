@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-static e_floor_or_ceiling	which_fc(char *line)
+static t_floor_or_ceiling	which_fc(char *line)
 {
-	e_floor_or_ceiling	re;
+	t_floor_or_ceiling	re;
 
 	while (isspace(*line))
 		line++;
@@ -17,7 +17,7 @@ static e_floor_or_ceiling	which_fc(char *line)
 	return (re);
 }
 
-static int	get_fc_texture_name(char *line, e_floor_or_ceiling fc,
+static int	get_fc_texture_name(char *line, t_floor_or_ceiling fc,
 		t_texture_name **texture_name)
 {
 	char	*name;
@@ -66,7 +66,7 @@ static int	change_floor_or_ceiling(t_texture_name **texture_name)
 	return (0);
 }
 
-static int	read_fc_color_utils(e_floor_or_ceiling fc, char *line,
+static int	read_fc_color_utils(t_floor_or_ceiling fc, char *line,
 		t_texture_name **texture_name, int *n)
 {
 	if (fc == FC_No)
@@ -88,7 +88,7 @@ int	read_fc_color(t_texture_name **texture_name, int fd)
 {
 	char				*line;
 	int					n;
-	e_floor_or_ceiling	fc;
+	t_floor_or_ceiling	fc;
 
 	n = 0;
 	while (n < 2)
