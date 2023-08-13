@@ -46,32 +46,32 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	}
 	if (texture_name->direction == North)
 	{
-		vars->dir_x = 0;
-		vars->dir_y = 1;
-		vars->plane_x = 0.66;
-		vars->plane_y = 0;
+		vars->dir_x = -1;
+		vars->dir_y = 0;
+		vars->plane_x = 0;
+		vars->plane_y = 0.66;
 	}
 	if (texture_name->direction == South)
+	{
+		vars->dir_x = 1;
+		vars->dir_y = 0;
+		vars->plane_x = 0;
+		vars->plane_y = 0.66;
+	}
+	if (texture_name->direction == West)
 	{
 		vars->dir_x = 0;
 		vars->dir_y = -1;
 		vars->plane_x = 0.66;
 		vars->plane_y = 0;
-	}
-	if (texture_name->direction == West)
-	{
-		vars->dir_x = -1;
-		vars->dir_y = 0;
-		vars->plane_x = 0;
-		vars->plane_y = 0.66;
 		
 	}
 	if (texture_name->direction == East)
 	{
-		vars->dir_x = 1;
-		vars->dir_y = 0;
-				vars->plane_x = 0;
-		vars->plane_y = 0.66;
+		vars->dir_x = 0;
+		vars->dir_y = 1;
+		vars->plane_x = 0.66;
+		vars->plane_y = 0;
 	}
 	vars->floor = texture_name->f;
 	vars->ceiling = texture_name->c;
