@@ -24,6 +24,18 @@
 // # define R_ALW	65363
 // # define L_ALW	65361
 
+/*
+# define EIXT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define ESC		65307
+# define W_KEY	119
+# define S_KEY	115
+# define D_KEY	100
+# define A_KEY	97
+# define R_ALW	65363
+# define L_ALW	65361
+*/
+
 //mac keycode
 # define ESC 53
 # define W_KEY 13

@@ -87,6 +87,7 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	add_direction(vars, texture_name);
 	vars->floor = texture_name->f;
 	vars->ceiling = texture_name->c;
+
 	vars->pos_x = texture_name->pos_x;
 	vars->pos_y = texture_name->pos_y;
 }
