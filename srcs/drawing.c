@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-extern int	worldMap[MAPWIDTH][MAPHEIGHT];
-
 void	draw_ceiling(t_vars *vars, int line, t_data data)
 {
 	int	draw_start;
@@ -39,8 +37,8 @@ void	draw_texture(t_vars *vars, int line, t_data data)
 		data.tex_y = (int)tex_pos & (data.img.img_height - 1);
 		tex_pos += data.step;
 		mlx_pixel_put(vars->mlx, vars->win, line, j, *(int *)(data.img.addr
-			+ data.tex_y * data.img.size_len + data.tex_x
-			* (data.img.bits_per_pixel / 8)));
+				+ data.tex_y * data.img.size_len + data.tex_x
+				* (data.img.bits_per_pixel / 8)));
 		j++;
 	}
 }

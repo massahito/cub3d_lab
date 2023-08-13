@@ -56,26 +56,27 @@ static void	add_direction_utils(t_vars *vars, double x, double y, bool flag)
 	vars->dir_y = y;
 	if (flag)
 	{
-		vars->plane_x = 0;
-		vars->plane_y = 0.66;
+		vars->plane_x = 0.66;
+		vars->plane_y = 0;
 	}
 	else
 	{
-		vars->plane_x = 0.66;
-		vars->plane_y = 0;
+		vars->plane_x = 0;
+		vars->plane_y = 0.66;
 	}
 }
 
 static void	add_direction(t_vars *vars, t_texture_name *texture_name)
 {
+	vars->default_dir = texture_name->direction;
 	if (texture_name->direction == North)
-		add_direction_utils(vars, 0, 1, false);
+		add_direction_utils(vars, -1, 0, false);
 	if (texture_name->direction == South)
-		add_direction_utils(vars, 0, -1, false);
+		add_direction_utils(vars, 1, 0, false);
 	if (texture_name->direction == West)
-		add_direction_utils(vars, -1, 0, true);
+		add_direction_utils(vars, 0, -1, true);
 	if (texture_name->direction == East)
-		add_direction_utils(vars, 1, 0, true);
+		add_direction_utils(vars, 0, 1, true);
 }
 
 void	add_vars(t_vars *vars, t_texture_name *texture_name,
@@ -87,7 +88,6 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	add_direction(vars, texture_name);
 	vars->floor = texture_name->f;
 	vars->ceiling = texture_name->c;
-
-	vars->pos_x = texture_name->pos_x;
-	vars->pos_y = texture_name->pos_y;
+	vars->pos_x = texture_name->pos_y;
+	vars->pos_y = texture_name->pos_x;
 }

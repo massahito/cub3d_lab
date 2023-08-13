@@ -1,8 +1,25 @@
 #include "cub3d.h"
 
-extern int	worldMap[MAPWIDTH][MAPHEIGHT];
+void	turn_abs_right(t_vars *vars, double rot_speed);
+void	turn_abs_left(t_vars *vars, double rot_speed);
 
 void	turn_right(t_vars *vars, double rot_speed)
+{
+	if (vars->default_dir == North || vars->default_dir == East)
+		turn_abs_right(vars, rot_speed);
+	else
+		turn_abs_left(vars, rot_speed);
+}
+
+void	turn_left(t_vars *vars, double rot_speed)
+{
+	if (vars->default_dir == North || vars->default_dir == East)
+		turn_abs_left(vars, rot_speed);
+	else
+		turn_abs_right(vars, rot_speed);
+}
+
+void	turn_abs_right(t_vars *vars, double rot_speed)
 {
 	double	olddir_x;
 	double	oldplane_x;
@@ -17,7 +34,7 @@ void	turn_right(t_vars *vars, double rot_speed)
 		* cos(-rot_speed);
 }
 
-void	turn_left(t_vars *vars, double rot_speed)
+void	turn_abs_left(t_vars *vars, double rot_speed)
 {
 	double	olddir_x;
 	double	oldplane_x;

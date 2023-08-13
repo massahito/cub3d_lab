@@ -25,6 +25,7 @@ typedef struct s_vars
 	char					**map;
 	int						floor;	
 	int						ceiling;
+	int						default_dir;
 	t_img					wall[4];
 }							t_vars;
 
@@ -61,7 +62,7 @@ typedef struct s_data
 /**
  * 
 */
-typedef enum azimuth
+typedef enum s_azimuth
 {
 	North,
 	South,
@@ -69,7 +70,7 @@ typedef enum azimuth
 	East,
 	AZIMUTH_Vary,
 	AZIMUTH_No,
-}							e_azimuth;
+}							t_azimuth;
 
 typedef struct s_texture_name
 {
@@ -83,7 +84,7 @@ typedef struct s_texture_name
 	int						f;
 	double					pos_x;
 	double					pos_y;
-	e_azimuth					direction;
+	t_azimuth					direction;
 
 }							t_texture_name;
 
@@ -93,7 +94,7 @@ typedef enum floor_or_ceiling
 	Ceiling,
 	FC_Vary,
 	FC_No,
-}							e_floor_or_ceiling;
+}							t_floor_or_ceiling;
 
 typedef struct s_map_list	t_map_list;
 struct						s_map_list
