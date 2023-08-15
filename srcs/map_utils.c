@@ -35,7 +35,6 @@ char	**make_map(t_map_list *map_list)
 			map_free(map);
 			malloc_err();
 		}
-		printf("%s\n", map[i]);
 		tmp = tmp->next;
 		i++;
 	}
