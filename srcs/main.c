@@ -108,15 +108,12 @@ int	main(int argc, char **argv)
 		error("Invalid argument", NULL, NULL);
 		exit(EXIT_FAILURE);
 	}
-	if (check_file_name(argv[1]))
-	{
-		error("Invalid file name: ", argv[1], NULL);
+	if (check_file(argv[1]))
 		exit(EXIT_FAILURE);
-	}
 	read_cub_file(argv[1], &texture_name, &map_list);
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
 	add_vars(&vars, texture_name, map_list);
+	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	calc(&vars);
 	mlx_loop(vars.mlx);

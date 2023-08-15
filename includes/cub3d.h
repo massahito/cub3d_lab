@@ -69,10 +69,10 @@ int				is_file_name_ok(char *str);
 */
 // int			error(char *str, char *str2, char *str3, size_t exit_status);
 int				error(char *str, char *str2, char *str3);
-bool			check_file_name(char *str);
+bool	check_file(char *str);
 void			free_azimuths(t_texture_name *texture_name);
-int				read_azimuths(t_texture_name **texture_name, int fd);
-int				read_fc_color(t_texture_name **texture_name, int fd);
+// int				read_azimuths(t_texture_name **texture_name, int fd);
+// int				read_fc_color(t_texture_name **texture_name, int fd);
 int				read_map(t_map_list **map_list, int fd);
 void			free_map_list(t_map_list *map_list);
 int				map_check(t_map_list **map_list);
@@ -85,6 +85,7 @@ t_map_list		*new_map_list(char *line);
 void			read_cub_file(char *argv, t_texture_name **texture_name,
 					t_map_list **map_list);
 char			*delete_line_break(char *line);
+bool	is_no_str(char *line);
 int				apply_list(t_map_list *map_list, int (*pfunc)(char *));
 bool			no_line(char *line);
 void			add_vars(t_vars *vars, t_texture_name *texture_name,
@@ -112,6 +113,8 @@ int				check_number_space(char *str);
 int				check_rgb(char *str);
 void			add_rgb(int *num, char *str);
 int				change_rgb(int *n);
+int	change_floor_or_ceiling(t_texture_name **texture_name);
+int	texture_is_complete(t_texture_name *texture_name);
 // t_map_list	*map_last(t_map_list *map_list);
 // t_map_list	*new_map_list(char *line);
 // void	add_map_list(t_map_list **map_list, char *line);
@@ -123,7 +126,10 @@ t_map_list		*new_map_list(char *line);
 t_map_list		*map_last(t_map_list *map_list);
 void			free_map_clear(t_map_list *map_list);
 void			free_map_list(t_map_list *map_list);
+char *delete_parts_not_needed_line(char *line);
+void	delete_map_space(t_map_list **map_list);
 
+int read_azimuths_floor_ceil(t_texture_name **texture_name, int fd);
 /**    X  */
 # define C 88
 /**    1  */

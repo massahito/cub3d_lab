@@ -1,0 +1,8 @@
+NO ./images/komurokei.xpm
+SO ./images/bluestone.xpm
+WE ./images/colorstone.xpm
+EA ./images/greystone.xpm
+
+F 220,100,0
+C 225,30,0
+

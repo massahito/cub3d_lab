@@ -12,16 +12,12 @@ static void	add_texture_direction(t_texture_name *texture_name, char c)
 		texture_name->direction = East;
 }
 
-void	player_direction_check(t_texture_name *texture_name,
-							t_map_list *map_list)
+static void	player_direction_check(t_texture_name *texture_name,
+		t_map_list *map_list, int i, int k)
 {
-	int			i;
-	int			k;
 	char		c;
 	t_map_list	*tmp;
 
-	i = 0;
-	k = 0;
 	tmp = map_list;
 	while (tmp)
 	{
@@ -32,6 +28,7 @@ void	player_direction_check(t_texture_name *texture_name,
 				texture_name->pos_x = i;
 				texture_name->pos_y = k;
 				c = tmp->line[i];
+				tmp->line[i] = '0';
 			}
 			i++;
 		}
@@ -53,15 +50,13 @@ void	read_cub_file(char *argv, t_texture_name **texture_name,
 	file_fd = open(argv, O_RDONLY);
 	if (file_fd == -1)
 		read_err("cub file open error", -1, NULL);
-	if (read_azimuths(texture_name, file_fd))
-		read_err(NULL, file_fd, texture_name);
-	if (read_fc_color(texture_name, file_fd))
+	if (read_azimuths_floor_ceil(texture_name, file_fd))
 		read_err(NULL, file_fd, texture_name);
 	if (read_map(map_list, file_fd))
 		read_err(NULL, file_fd, texture_name);
 	if (map_check(map_list))
 		read_err(NULL, file_fd, texture_name);
 	apply_list(*map_list, fill_in_one_line);
-	player_direction_check(*texture_name, *map_list);
+	player_direction_check(*texture_name, *map_list, 0, 0);
 	close(file_fd);
 }

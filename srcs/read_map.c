@@ -9,43 +9,6 @@ bool	is_no_str(char *line)
 	return (false);
 }
 
-void	delete_map_space(t_map_list **map_list)
-{
-	t_map_list	*tmp;
-	t_map_list	*last;
-	char		*line;
-
-	last = map_last(*map_list);
-	while (1)
-	{
-		last = map_last(*map_list);
-		tmp = last->prev;
-		line = last->line;
-		if (is_no_str(line))
-		{
-			free_map_clear(last);
-			tmp->next = NULL;
-		}
-		else
-			break ;
-	}
-}
-
-char	*delete_line_break(char *line)
-{
-	char	*new;
-	size_t	len;
-
-	len = strlen(line);
-	if (line[len - 1] != '\n')
-		return (line);
-	new = strndup(line, len - 1);
-	if (!new)
-		malloc_err();
-	free(line);
-	return (new);
-}
-
 static char	*read_map_utils(int fd, char *line)
 {
 	while (1)
