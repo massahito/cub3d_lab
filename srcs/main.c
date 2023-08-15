@@ -112,8 +112,8 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	read_cub_file(argv[1], &texture_name, &map_list);
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
 	add_vars(&vars, texture_name, map_list);
+	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
 	calc(&vars);
 	mlx_loop(vars.mlx);
