@@ -12,12 +12,16 @@ static void	add_texture_direction(t_texture_name *texture_name, char c)
 		texture_name->direction = East;
 }
 
-static void	player_direction_check(t_texture_name *texture_name,
-		t_map_list *map_list, int i, int k)
+void	player_direction_check(t_texture_name *texture_name,
+		t_map_list *map_list)
 {
+	int			i;
+	int			k;
 	char		c;
 	t_map_list	*tmp;
 
+	i = 0;
+	k = 0;
 	tmp = map_list;
 	while (tmp)
 	{
@@ -57,6 +61,6 @@ void	read_cub_file(char *argv, t_texture_name **texture_name,
 	if (map_check(map_list))
 		read_err(NULL, file_fd, texture_name);
 	apply_list(*map_list, fill_in_one_line);
-	player_direction_check(*texture_name, *map_list, 0, 0);
+	player_direction_check(*texture_name, *map_list);
 	close(file_fd);
 }

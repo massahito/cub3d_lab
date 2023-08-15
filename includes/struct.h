@@ -62,16 +62,17 @@ typedef struct s_data
 /**
  * 
 */
-typedef enum s_azimuth
+typedef enum s_texture
 {
 	North,
 	South,
 	West,
 	East,
-	AZIMUTH_Vary,
-	AZIMUTH_No,
-}							t_azimuth;
-
+	Floor,
+	Ceiling,
+	VaryTexture,
+	NoTexture,
+}							t_texture;
 typedef struct s_texture_name
 {
 	char					*north;
@@ -84,17 +85,9 @@ typedef struct s_texture_name
 	int						f;
 	double					pos_x;
 	double					pos_y;
-	t_azimuth					direction;
+	t_texture					direction;
 
 }							t_texture_name;
-
-typedef enum floor_or_ceiling
-{
-	Floor,
-	Ceiling,
-	FC_Vary,
-	FC_No,
-}							t_floor_or_ceiling;
 
 typedef struct s_map_list	t_map_list;
 struct						s_map_list
@@ -103,4 +96,5 @@ struct						s_map_list
 	t_map_list				*next;
 	t_map_list				*prev;
 };
+
 #endif
