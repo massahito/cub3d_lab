@@ -69,10 +69,10 @@ int				is_file_name_ok(char *str);
 */
 // int			error(char *str, char *str2, char *str3, size_t exit_status);
 int				error(char *str, char *str2, char *str3);
-bool			check_file_name(char *str);
+bool	check_file(char *str);
 void			free_azimuths(t_texture_name *texture_name);
-int				read_azimuths(t_texture_name **texture_name, int fd);
-int				read_fc_color(t_texture_name **texture_name, int fd);
+// int				read_azimuths(t_texture_name **texture_name, int fd);
+// int				read_fc_color(t_texture_name **texture_name, int fd);
 int				read_map(t_map_list **map_list, int fd);
 void			free_map_list(t_map_list *map_list);
 int				map_check(t_map_list **map_list);
