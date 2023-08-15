@@ -32,6 +32,9 @@ assertfilename() {
 cp ../../cub3D .
 assertfilename 'map/out.cb'
 assertfilename 'map/map.cub';
+assertfilename 'map/map.cub.cub';
+assertfilename 'map/map.cub.cub.cub';
+assertfilename 'map/map.cub.cub.cub.cub.cub.cub.cub.cub.cub.cub.cub.cub';
 assertfilename 'map/mapdasd.cub';
 assertfilename 'map/outmap.cu';
 assertfilename 'map/outmap.c';
@@ -43,8 +46,9 @@ assertfilename 'map/outmap.';
 assertfilename 'map/outmap';
 
 i=0
-while [ $i -lt 60 ]; do
+while [ $i -lt 61 ]; do
     filename=$(printf "map/map%02d.cub" $i)
     assertfilename $filename
     i=$((i + 1))
 done
+    assertfilename map/map101.cub
