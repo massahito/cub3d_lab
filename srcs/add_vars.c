@@ -40,11 +40,11 @@ static void	add_addr(t_vars *vars, t_texture_name *texture_name,
 											&(vars->wall[3].bits_per_pixel), \
 											&(vars->wall[3].size_len), \
 											&(vars->wall[3].endian));
-	free_azimuths(texture_name);
-	free_map_list(map_list);
 	if (!vars->wall[0].addr || !vars->wall[1].addr || !vars->wall[2].addr \
 		|| !vars->wall[0].addr)
 	{
+		free_azimuths(texture_name);
+		free_map_list(map_list);
 		error("Error: ", "Invalid addr: ", "wall addr");
 		exit(1);
 	}
@@ -90,4 +90,6 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	vars->ceiling = texture_name->c;
 	vars->pos_x = texture_name->pos_y;
 	vars->pos_y = texture_name->pos_x;
+	free_azimuths(texture_name);
+	free_map_list(map_list);
 }

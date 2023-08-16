@@ -39,18 +39,20 @@ static char	*delete_line_back_space(char *line)
 
 	if (!line)
 		return (NULL);
-	i = ft_strlen(line) - 1;
-	while (ft_isspace(line[i]))
+	i = ft_strlen(line);
+	if (i == 0)
+		return (line);
+	while (ft_isspace(line[i - 1]) && i > 0)
 		i--;
-	return_value = ft_substr(line, 0, i + 1);
+	return_value = ft_substr(line, 0, i);
 	free(line);
 	return (return_value);
 }
 
 char	*delete_parts_not_needed_line(char *line)
 {
-	line = delete_line_space(line);
 	line = delete_line_break(line);
+	line = delete_line_space(line);
 	line = delete_line_back_space(line);
 	return (line);
 }
