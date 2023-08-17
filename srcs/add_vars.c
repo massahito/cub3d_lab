@@ -16,7 +16,7 @@ static void	add_img(t_vars *vars, t_texture_name *texture_name, \
 	{
 		free_azimuths(texture_name);
 		free_map_list(map_list);
-		error("Error: ", "Invalid img: ", "wall img");
+		error("Invalid img: ", "wall img", NULL);
 		exit(1);
 	}
 }
@@ -45,7 +45,7 @@ static void	add_addr(t_vars *vars, t_texture_name *texture_name,
 	{
 		free_azimuths(texture_name);
 		free_map_list(map_list);
-		error("Error: ", "Invalid addr: ", "wall addr");
+		error("Invalid addr: ", "wall addr", NULL);
 		exit(1);
 	}
 }

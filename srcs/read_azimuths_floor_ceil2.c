@@ -5,17 +5,17 @@ int	change_floor_or_ceiling(t_texture_name **texture_name)
 	if ((*texture_name)->floor)
 	{
 		if (check_number_comma((*texture_name)->floor))
-			return (error("Error: ", "Invalid chara: ", "floor"));
+			return (error("Invalid chara: ", "floor", NULL));
 		if (check_rgb((*texture_name)->floor))
-			return (error("Error: ", "Invalid chara: ", "floor"));
+			return (error("Invalid chara: ", "floor", NULL));
 		add_rgb(&(*texture_name)->f, (*texture_name)->floor);
 	}
 	if ((*texture_name)->ceiling)
 	{
 		if (check_number_comma((*texture_name)->ceiling))
-			return (error("Error: ", "Invalid file: ", "ceiling"));
+			return (error("Invalid file: ", "ceiling", NULL));
 		if (check_rgb((*texture_name)->floor))
-			return (error("Error: ", "Invalid chara: ", "ceiling"));
+			return (error("Invalid chara: ", "ceiling", NULL));
 		add_rgb(&(*texture_name)->c, (*texture_name)->ceiling);
 	}
 	return (0);

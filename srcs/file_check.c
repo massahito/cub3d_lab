@@ -2,7 +2,7 @@
 
 bool	check_file(char *str)
 {
-	int fd;
+	int	fd;
 
 	if (!str || strlen(str) < 4)
 	{
@@ -16,9 +16,9 @@ bool	check_file(char *str)
 	}
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
-	 {
+	{
 		error("File open error: ", str, NULL);
-		return true;
-	 }
+		return (true);
+	}
 	return (false);
 }
