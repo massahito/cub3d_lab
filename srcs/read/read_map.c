@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:42:07 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:42:07 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 14:06:16 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 bool	is_no_str(char *line)
 {
-	while (isspace(*line))
+	while (ft_isspace(*line))
 		line++;
-	if (strncmp(line, "", 1) == 0 || strncmp(line, "\n", 1) == 0)
+	if (ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0)
 		return (true);
 	return (false);
 }
@@ -28,7 +28,7 @@ static char	*read_map_utils(int fd, char *line)
 		line = get_next_line(fd);
 		if (line == NULL)
 			return (NULL);
-		else if (strcmp(line, "") == 0 || strcmp(line, "\n") == 0)
+		else if (ft_strncmp(line, "", 1) == 0 || ft_strncmp(line, "\n", 1) == 0)
 		{
 			free(line);
 			continue ;

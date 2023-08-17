@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ubuntu2204 <ubuntu2204@student.42.fr>      +#+  +:+       +#+         #
+#    By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/30 11:18:56 by kyoda             #+#    #+#              #
-#    Updated: 2023/07/29 21:44:57 by ubuntu2204       ###   ########.fr        #
+#    Updated: 2023/08/17 14:04:42 by kyoda            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRCS		=	ft_atoi.c 		\
 				ft_strmapi.c 	\
 				ft_strtrim.c 	\
 				ft_substr.c		\
-				ft_double_ptr_free.c
+				ft_double_ptr_free.c\
+				ft_strndup.c
 
 SRCS_BONUS	=	ft_lstadd_back.c	\
 				ft_lstadd_front.c	\

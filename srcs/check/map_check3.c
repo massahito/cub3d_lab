@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:41:22 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:41:23 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 14:07:37 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ size_t	max_line_size(t_map_list *map_list)
 	size_t	max;
 	size_t	tmp;
 
-	max = strlen(map_list->line);
+	max = ft_strlen(map_list->line);
 	while (map_list)
 	{
-		tmp = strlen(map_list->line);
+		tmp = ft_strlen(map_list->line);
 		if (max < tmp)
 			max = tmp;
 		map_list = map_list->next;

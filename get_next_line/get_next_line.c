@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubuntu2204 <ubuntu2204@student.42.fr>      +#+  +:+       +#+        */
+/*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 03:03:37 by kyoda             #+#    #+#             */
-/*   Updated: 2023/07/29 18:33:56 by ubuntu2204       ###   ########.fr       */
+/*   Updated: 2023/08/17 14:09:24 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	if(!ft_gnl_strchr(memory[fd],'\n'))
+	if (!ft_gnl_strchr(memory[fd], '\n'))
 	{
 		line = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 		if (!line)

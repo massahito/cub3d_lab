@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:42:13 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:42:13 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 14:07:37 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*delete_line_break(char *line)
 
 	if (!line)
 		return (NULL);
-	len = strlen(line);
+	len = ft_strlen(line);
 	if (line[len - 1] != '\n')
 		return (line);
-	new = strndup(line, len - 1);
+	new = ft_strndup(line, len - 1);
 	if (!new)
 		malloc_err();
 	free(line);
