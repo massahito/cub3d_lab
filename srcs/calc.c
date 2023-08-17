@@ -6,3 +6,25 @@ double	abs_double(double num)
 		return (-1 * num);
 	return (num);
 }
+
+void	calc(t_vars *vars)
+{
+	int		i;
+	double	camera;
+	t_x		x;
+	t_y		y;
+	t_data	data;
+
+	i = 0;
+	while (i < WIN_WIDTH)
+	{
+		camera = 2 * i / (double)WIN_WIDTH - 1;
+		set_value(vars, &x, &y, camera);
+		calc_first_step(vars, &x, &y);
+		data = calc_dda(vars, &x, &y);
+		set_data(&data, vars, x, y);
+		drawing(vars, i, data);
+		i++;
+	}
+	return ;
+}

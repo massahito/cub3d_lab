@@ -37,3 +37,12 @@ int	texture_is_complete(t_texture_name *texture_name)
 		return (0);
 	return (1);
 }
+
+bool	no_line(char *line)
+{
+	while (isspace(*line))
+		line++;
+	if (strncmp(line, "\0", 1) == 0)
+		return (true);
+	return (false);
+}

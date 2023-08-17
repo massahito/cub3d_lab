@@ -14,7 +14,7 @@ int	check_number_comma(char *str)
 	return (0);
 }
 
-int	check_number_space(char *str)
+static int	check_number_space(char *str)
 {
 	int	i;
 

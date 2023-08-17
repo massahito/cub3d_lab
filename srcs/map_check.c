@@ -20,7 +20,7 @@ static bool	what_next_character(int i, int j, char **map, bool *flag)
 	return (false);
 }
 
-void	surrounded_walls(int i, int j, char **map, bool *flag)
+static void	surrounded_walls(int i, int j, char **map, bool *flag)
 {
 	if (what_next_character(i, j - 1, map, flag))
 		surrounded_walls(i, j - 1, map, flag);
@@ -32,7 +32,7 @@ void	surrounded_walls(int i, int j, char **map, bool *flag)
 		surrounded_walls(i + 1, j, map, flag);
 }
 
-void	get_player_position(char **map, int *i, int *j)
+static void	get_player_position(char **map, int *i, int *j)
 {
 	int	k;
 	int	l;
@@ -56,7 +56,7 @@ void	get_player_position(char **map, int *i, int *j)
 	}
 }
 
-int	dfs(char **map)
+static int	dfs(char **map)
 {
 	bool	flag;
 	int		i;
