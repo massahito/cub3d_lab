@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:41:41 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:41:41 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 14:02:18 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**make_map(t_map_list *map_list)
 	i = 0;
 	while (tmp)
 	{
-		map[i] = strdup(tmp->line);
+		map[i] = ft_strdup(tmp->line);
 		if (map[i] == NULL)
 		{
 			map_free(map);

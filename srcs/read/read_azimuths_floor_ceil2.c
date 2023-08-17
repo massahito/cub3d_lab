@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:42:00 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:42:00 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 14:06:16 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	texture_is_complete(t_texture_name *texture_name)
 
 bool	no_line(char *line)
 {
-	while (isspace(*line))
+	while (ft_isspace(*line))
 		line++;
-	if (strncmp(line, "\0", 1) == 0)
+	if (ft_strncmp(line, "\0", 1) == 0)
 		return (true);
 	return (false);
 }

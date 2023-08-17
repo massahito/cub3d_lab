@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 21:01:57 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:48:03 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 14:08:18 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				ft_double_ptr_free(char **dst);
+char				*ft_strndup(const char *str, size_t n);
 
 #endif

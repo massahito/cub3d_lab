@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_check.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/17 13:41:13 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 14:07:37 by kyoda            ###   ########.fr       */
+/*   Created: 2023/08/17 14:03:38 by kyoda             #+#    #+#             */
+/*   Updated: 2023/08/17 14:09:06 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-bool	check_file(char *str)
+char	*ft_strndup(const char *str, size_t n)
 {
-	int	fd;
+	size_t		len;
+	char		*p;
 
-	if (!str || ft_strlen(str) < 4)
-	{
-		error("Invalid file name: ", str, NULL);
-		return (true);
-	}
-	else if (ft_strncmp(&(str[ft_strlen(str) - 4]), ".cub", 4))
-	{
-		error("Invalid file name: ", str, NULL);
-		return (true);
-	}
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
-	{
-		error("File open error: ", str, NULL);
-		return (true);
-	}
-	return (false);
+	len = ft_strlen(str);
+	if (len <= n)
+		return (ft_strdup(str));
+	p = ft_calloc(n + 1, sizeof(char));
+	if (!p)
+		return (NULL);
+	ft_memcpy(p, str, n);
+	return (p);
 }
