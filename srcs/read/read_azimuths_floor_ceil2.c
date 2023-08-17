@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:42:00 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 14:06:16 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 18:08:35 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	change_floor_or_ceiling(t_texture_name **texture_name)
 	{
 		if (check_number_comma((*texture_name)->ceiling))
 			return (error("Invalid file: ", "ceiling", NULL));
-		if (check_rgb((*texture_name)->floor))
+		if (check_rgb((*texture_name)->ceiling))
 			return (error("Invalid character:", "ceiling", NULL));
 		add_rgb(&(*texture_name)->c, (*texture_name)->ceiling);
 	}
