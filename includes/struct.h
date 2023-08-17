@@ -6,7 +6,7 @@
 /*   By: marai <marai@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:48:57 by marai             #+#    #+#             */
-/*   Updated: 2023/08/17 13:48:57 by marai            ###   ########.fr       */
+/*   Updated: 2023/08/17 13:53:37 by marai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ typedef struct s_data
 	t_img					img;
 }							t_data;
 
-/**
- * 
-*/
 typedef enum s_texture
 {
 	North,
