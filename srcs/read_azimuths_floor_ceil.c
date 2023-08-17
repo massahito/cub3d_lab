@@ -46,7 +46,7 @@ static int	add_texture(char **buf, char *line)
 {
 	if (*buf)
 	{
-		error("Error :", "same texture", line);
+		error("same texture", line, NULL);
 		free(line);
 		return (1);
 	}
@@ -56,7 +56,8 @@ static int	add_texture(char **buf, char *line)
 	return (0);
 }
 
-static int	make_texture(t_texture_name **texture_name, t_texture texture, char **line)
+static int	make_texture(t_texture_name **texture_name, t_texture texture,
+		char **line)
 {
 	*line = serch_texture_path(*line, texture);
 	if (texture == North)
@@ -84,9 +85,10 @@ int	read_azimuths_floor_ceil(t_texture_name **texture_name, int fd)
 		line = get_next_line(fd);
 		if (line == NULL)
 		{
-			return (error("Error: ", "Invalid file: ", 	"No azimuths or floor/ceiling"));
+			return (error("Invalid file: ", "No azimuths or floor/ceiling",
+					NULL));
 		}
-        line = delete_parts_not_needed_line(line);
+		line = delete_parts_not_needed_line(line);
 		texture = which_texture(line);
 		if (texture == VaryTexture)
 			return (error("Invalid file: ", "Vary texture: ", line));
