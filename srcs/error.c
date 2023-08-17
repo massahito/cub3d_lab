@@ -2,7 +2,7 @@
 
 int	error(char *str, char *str2, char *str3)
 {
-	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd("Error\n", 2);
 	if (str)
 		ft_putstr_fd(str, 2);
 	if (str2)

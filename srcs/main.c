@@ -95,15 +95,9 @@ void	calc(t_vars *vars)
 	return ;
 }
 
-int mlx_destroy(int keycode, t_vars *vars)
+int	mlx_destroy(int keycode)
 {
 	(void)keycode;
-
-	/**
-	 * address sanitize をつけるとエラー出る
-	*/
-	// mlx_destroy_window(vars->mlx, vars->win);
-	(void)vars;
 	exit(0);
 }
 
@@ -127,7 +121,7 @@ int	main(int argc, char **argv)
 	add_vars(&vars, texture_name, map_list);
 	vars.win = mlx_new_window(vars.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d!");
 	mlx_hook(vars.win, 2, 1L << 0, keypress, &vars);
-	mlx_hook(vars.win, 17, 1L << 2, mlx_destroy,&vars);
+	mlx_hook(vars.win, 17, 1L << 2, mlx_destroy, &vars);
 	calc(&vars);
 	mlx_loop(vars.mlx);
 }
