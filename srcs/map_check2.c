@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	move_line(char *line, char *newline)
+static void	move_line(char *line, char *newline)
 {
 	while (*line)
 	{
@@ -11,7 +11,7 @@ void	move_line(char *line, char *newline)
 	}
 }
 
-void	remake_line(t_map_list *map_list, size_t max_size)
+static void	remake_line(t_map_list *map_list, size_t max_size)
 {
 	char	*newline;
 
@@ -37,7 +37,7 @@ void	make_x_map(t_map_list *map_list)
 	}
 }
 
-char	*make_x_line(char *line, size_t size, char c)
+static char	*make_x_line(char *line, size_t size, char c)
 {
 	char	*newline;
 	size_t	i;

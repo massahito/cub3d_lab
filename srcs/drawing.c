@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	draw_ceiling(t_vars *vars, int line, t_data data)
+static void	draw_ceiling(t_vars *vars, int line, t_data data)
 {
 	int	draw_start;
 	int	j;
@@ -16,7 +16,7 @@ void	draw_ceiling(t_vars *vars, int line, t_data data)
 	}
 }
 
-void	draw_texture(t_vars *vars, int line, t_data data)
+static void	draw_texture(t_vars *vars, int line, t_data data)
 {
 	int		j;
 	int		draw_start;
@@ -43,7 +43,7 @@ void	draw_texture(t_vars *vars, int line, t_data data)
 	}
 }
 
-void	draw_floor(t_vars *vars, int line, t_data data)
+static void	draw_floor(t_vars *vars, int line, t_data data)
 {
 	int	draw_end;
 	int	j;

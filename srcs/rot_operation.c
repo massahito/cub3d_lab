@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
-void	turn_abs_right(t_vars *vars, double rot_speed);
-void	turn_abs_left(t_vars *vars, double rot_speed);
+static void	turn_abs_right(t_vars *vars, double rot_speed);
+static void	turn_abs_left(t_vars *vars, double rot_speed);
 
 void	turn_right(t_vars *vars, double rot_speed)
 {
@@ -19,7 +19,7 @@ void	turn_left(t_vars *vars, double rot_speed)
 		turn_abs_right(vars, rot_speed);
 }
 
-void	turn_abs_right(t_vars *vars, double rot_speed)
+static void	turn_abs_right(t_vars *vars, double rot_speed)
 {
 	double	olddir_x;
 	double	oldplane_x;
@@ -34,7 +34,7 @@ void	turn_abs_right(t_vars *vars, double rot_speed)
 		* cos(-rot_speed);
 }
 
-void	turn_abs_left(t_vars *vars, double rot_speed)
+static void	turn_abs_left(t_vars *vars, double rot_speed)
 {
 	double	olddir_x;
 	double	oldplane_x;
