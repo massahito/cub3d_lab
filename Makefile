@@ -20,7 +20,8 @@ SRCS		=	srcs/calculation/calc.c \
 				srcs/map/map_list2.c \
 				srcs/map/map_utils.c \
 				srcs/mlx/mlx_utils.c \
-				srcs/operation/move_operation.c \
+				srcs/operation/front_back_operation.c \
+				srcs/operation/right_left_operation.c \
 				srcs/operation/rot_operation.c \
 				srcs/read/read_azimuths_floor_ceil.c \
 				srcs/read/read_azimuths_floor_ceil2.c \

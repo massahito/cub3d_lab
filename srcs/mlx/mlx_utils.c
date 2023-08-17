@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marai <marai@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/17 13:47:56 by marai             #+#    #+#             */
+/*   Updated: 2023/08/17 13:47:57 by marai            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	keypress(int keycode, t_vars *vars)
@@ -73,10 +85,8 @@ void	set_data(t_data *data, t_vars *vars, t_x x, t_y y)
 	data->step = (1.0 * data->img.img_width) / data->wall_height;
 }
 
-int mlx_destroy(int keycode)
+int	mlx_destroy(int keycode)
 {
 	(void)keycode;
-
 	exit(0);
 }
-
