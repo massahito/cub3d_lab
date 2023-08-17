@@ -23,7 +23,7 @@ typedef struct s_vars
 	double					plane_x;
 	double					plane_y;
 	char					**map;
-	int						floor;	
+	int						floor;
 	int						ceiling;
 	int						default_dir;
 	t_img					wall[4];
@@ -85,7 +85,7 @@ typedef struct s_texture_name
 	int						f;
 	double					pos_x;
 	double					pos_y;
-	t_texture					direction;
+	t_texture				direction;
 
 }							t_texture_name;
 
