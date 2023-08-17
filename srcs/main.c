@@ -95,14 +95,9 @@ void	calc(t_vars *vars)
 	return ;
 }
 
-int	mlx_destroy(int keycode, t_vars *vars)
+int	mlx_destroy(int keycode)
 {
 	(void)keycode;
-	/**
-		* address sanitize をつけるとエラー出る
-	*/
-	// mlx_destroy_window(vars->mlx, vars->win);
-	(void)vars;
 	exit(0);
 }
 
