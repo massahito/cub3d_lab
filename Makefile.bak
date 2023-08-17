@@ -18,7 +18,6 @@ SRCS		=	srcs/add_vars.c \
 				srcs/main.c \
 				srcs/map_check.c \
 				srcs/map_check2.c \
-				srcs/map_check3.c \
 				srcs/map_list.c \
 				srcs/map_list2.c \
 				srcs/map_utils.c \
@@ -30,7 +29,7 @@ SRCS		=	srcs/add_vars.c \
 				srcs/read_file2.c \
 				srcs/read_map.c \
 				srcs/rgb.c \
-				srcs/rgb2.c \
+				srcs/rgb2.c
 				srcs/rot_operation.c
 OBJDIR		=	obj
 OBJS		=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
@@ -67,15 +66,9 @@ $(LIBFTNAME):
 $(GNLNAME):
 	$(MAKE) --no-print-directory -C $(GNLDIR)
 
-minilibx:
-	if ! [ -d minilibx-linux ]; then\
-		git clone https://github.com/42Paris/minilibx-linux;\
-	fi
-
 UnitTest:
 	$(MAKE) -C test/UnitTest
 	./test/UnitTest/UnitTest
-
 clean:
 	rm -rf $(OBJDIR)
 	$(MAKE) clean -C ./test/UnitTest/

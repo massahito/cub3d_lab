@@ -1,37 +1,14 @@
 NAME		=	cub3D
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror #-g -fsanitize=leak
+# CFLAGS		=	-Wall -Wextra -Werror
 INCLUDE		=	-I ./minilibx-linux/ -I ./includes/
 LIBMACDIR	=	-L/usr/local/lib -L/usr/lib -L/usr/X11R6/lib
 LIBLNXDIR	=	-L/usr/local/lib -L/usr/lib -L./minilibx-linux
 LIBMAC		=	-lmlx -framework OpenGL -framework Appkit
 LIBLNX		=	-lmlx -lX11 -lXext -lm -lz
 MLXLIB		=	./minilibx-linux/libmlx.a
-SRCS		=	srcs/add_vars.c \
-				srcs/calc.c \
-				srcs/dda.c \
-				srcs/delete.c \
-				srcs/drawing.c \
-				srcs/error.c \
-				srcs/file_check.c \
-				srcs/file_name.c \
-				srcs/main.c \
-				srcs/map_check.c \
-				srcs/map_check2.c \
-				srcs/map_check3.c \
-				srcs/map_list.c \
-				srcs/map_list2.c \
-				srcs/map_utils.c \
-				srcs/move_operation.c \
-				srcs/read_azimuth2.c \
-				srcs/read_azimuths_floor_ceil.c \
-				srcs/read_azimuths_floor_ceil2.c \
-				srcs/read_file.c \
-				srcs/read_file2.c \
-				srcs/read_map.c \
-				srcs/rgb.c \
-				srcs/rgb2.c \
-				srcs/rot_operation.c
+SRCS		=	$(shell find ./srcs/ -name "*.c")
 OBJDIR		=	obj
 OBJS		=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
 VPATH		=	./srcs/
@@ -67,15 +44,9 @@ $(LIBFTNAME):
 $(GNLNAME):
 	$(MAKE) --no-print-directory -C $(GNLDIR)
 
-minilibx:
-	if ! [ -d minilibx-linux ]; then\
-		git clone https://github.com/42Paris/minilibx-linux;\
-	fi
-
 UnitTest:
 	$(MAKE) -C test/UnitTest
 	./test/UnitTest/UnitTest
-
 clean:
 	rm -rf $(OBJDIR)
 	$(MAKE) clean -C ./test/UnitTest/
