@@ -6,7 +6,7 @@
 /*   By: kyoda <kyoda@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 13:42:10 by kyoda             #+#    #+#             */
-/*   Updated: 2023/08/17 13:42:11 by kyoda            ###   ########.fr       */
+/*   Updated: 2023/08/17 18:09:01 by kyoda            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	add_img(t_vars *vars, t_texture_name *texture_name, \
 	vars->wall[3].img = mlx_xpm_file_to_image(vars->mlx, texture_name->east, \
 			&(vars->wall[3].img_width), &(vars->wall[3].img_height));
 	if (!vars->wall[0].img || !vars->wall[1].img || !vars->wall[2].img \
-		|| !vars->wall[0].img)
+		|| !vars->wall[3].img)
 	{
 		free_azimuths(texture_name);
 		free_map_list(map_list);
@@ -53,7 +53,7 @@ static void	add_addr(t_vars *vars, t_texture_name *texture_name,
 											&(vars->wall[3].size_len), \
 											&(vars->wall[3].endian));
 	if (!vars->wall[0].addr || !vars->wall[1].addr || !vars->wall[2].addr \
-		|| !vars->wall[0].addr)
+		|| !vars->wall[3].addr)
 	{
 		free_azimuths(texture_name);
 		free_map_list(map_list);
