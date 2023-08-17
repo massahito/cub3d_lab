@@ -7,32 +7,32 @@ LIBLNXDIR	=	-L/usr/local/lib -L/usr/lib -L./minilibx-linux
 LIBMAC		=	-lmlx -framework OpenGL -framework Appkit
 LIBLNX		=	-lmlx -lX11 -lXext -lm -lz
 MLXLIB		=	./minilibx-linux/libmlx.a
-SRCS		=	srcs/add_vars.c \
-				srcs/calc.c \
-				srcs/dda.c \
-				srcs/delete.c \
-				srcs/drawing.c \
-				srcs/error.c \
-				srcs/file_check.c \
+SRCS		=	srcs/calculation/calc.c \
+				srcs/calculation/dda.c \
+				srcs/calculation/drawing.c \
+				srcs/check/file_check.c \
+				srcs/check/map_check.c \
+				srcs/check/map_check2.c \
+				srcs/check/map_check3.c \
+				srcs/error/error.c \
 				srcs/main.c \
-				srcs/map_check.c \
-				srcs/map_check2.c \
-				srcs/map_check3.c \
-				srcs/map_list.c \
-				srcs/map_list2.c \
-				srcs/map_utils.c \
-				srcs/mlx_utils.c \
-				srcs/move_operation.c \
-				srcs/read_azimuths_floor_ceil.c \
-				srcs/read_azimuths_floor_ceil2.c \
-				srcs/read_file.c \
-				srcs/read_file2.c \
-				srcs/read_map.c \
-				srcs/rgb.c \
-				srcs/rgb2.c \
-				srcs/rot_operation.c
+				srcs/map/map_list.c \
+				srcs/map/map_list2.c \
+				srcs/map/map_utils.c \
+				srcs/mlx/mlx_utils.c \
+				srcs/operation/move_operation.c \
+				srcs/operation/rot_operation.c \
+				srcs/read/read_azimuths_floor_ceil.c \
+				srcs/read/read_azimuths_floor_ceil2.c \
+				srcs/read/read_file.c \
+				srcs/read/read_file2.c \
+				srcs/read/read_map.c \
+				srcs/utils/add_vars.c \
+				srcs/utils/delete.c \
+				srcs/utils/rgb.c \
+				srcs/utils/rgb2.c
 OBJDIR		=	obj
-OBJS		=	$(addprefix $(OBJDIR)/, $(notdir $(SRCS:.c=.o)))
+OBJS		=	$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 VPATH		=	./srcs/
 
 MAKE		= make --no-print-directory
