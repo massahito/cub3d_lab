@@ -14,7 +14,6 @@ SRCS		=	srcs/add_vars.c \
 				srcs/drawing.c \
 				srcs/error.c \
 				srcs/file_check.c \
-				srcs/file_name.c \
 				srcs/main.c \
 				srcs/map_check.c \
 				srcs/map_check2.c \
@@ -22,8 +21,8 @@ SRCS		=	srcs/add_vars.c \
 				srcs/map_list.c \
 				srcs/map_list2.c \
 				srcs/map_utils.c \
+				srcs/mlx_utils.c \
 				srcs/move_operation.c \
-				srcs/read_azimuth2.c \
 				srcs/read_azimuths_floor_ceil.c \
 				srcs/read_azimuths_floor_ceil2.c \
 				srcs/read_file.c \
