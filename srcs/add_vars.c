@@ -88,8 +88,8 @@ void	add_vars(t_vars *vars, t_texture_name *texture_name,
 	add_direction(vars, texture_name);
 	vars->floor = texture_name->f;
 	vars->ceiling = texture_name->c;
-	vars->pos_x = texture_name->pos_y;
-	vars->pos_y = texture_name->pos_x;
+	vars->pos_x = texture_name->pos_y + 0.5;
+	vars->pos_y = texture_name->pos_x + 0.5;
 	free_azimuths(texture_name);
 	free_map_list(map_list);
 }
